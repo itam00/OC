@@ -51,7 +51,7 @@ int main()
     //imprimirAscendente(lista);
     printf("lista eliminada");
     tPosicion pos = l_primera(lista);
-    l_recuperar(lista,pos);
+    l_recuperar(lista,l_primera(lista));
 
 
     //Testeo de Excepciones

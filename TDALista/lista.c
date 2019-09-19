@@ -55,6 +55,7 @@ void l_destruir(tLista* l,void (*fEliminar)(tElemento)){
         aEliminar = siguiente;
 
     }while(siguiente!=NULL);
+
 }
 
 
