@@ -19,6 +19,7 @@ void crear_lista(tLista* l){
  Si L es vacía, primera(L) = ultima(L) = fin(L).
 **/
 tPosicion l_primera(tLista l){
+
     tPosicion p = (tPosicion)l;
     return p;
 }
@@ -55,6 +56,7 @@ void l_destruir(tLista* l,void (*fEliminar)(tElemento)){
         aEliminar = siguiente;
 
     }while(siguiente!=NULL);
+    *l = NULL;
 
 }
 
