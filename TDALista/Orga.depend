@@ -11,3 +11,15 @@
 
 1568730093 c:\users\mati\documents\oc\orga\lista.h
 
+1568858952 source:c:\users\mati\documents\github\oc\tdalista\lista.c
+	"lista.h"
+	<stdio.h>
+	<stdlib.h>
+
+1568730093 c:\users\mati\documents\github\oc\tdalista\lista.h
+
+1568858294 source:c:\users\mati\documents\github\oc\tdalista\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+

@@ -2,18 +2,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+/**
+ Inicializa una lista vacía.
+ Una referencia a la lista creada es referenciada en *L.
+**/
+
 void crear_lista(tLista* l){
     *l = (struct celda*)malloc(sizeof(struct celda));
     (*l)->elemento = NULL;
     (*l)->siguiente = NULL;
 }
 
-
+/**
+ Recupera y retorna la primera posición de L.
+ Si L es vacía, primera(L) = ultima(L) = fin(L).
+**/
 tPosicion l_primera(tLista l){
     tPosicion p = (tPosicion)l;
     return p;
 }
 
+ /**
+ Recupera y retorna la última posición de L.
+ Si L es vacía, primera(L) = ultima(L) = fin(L).
+**/
 tPosicion l_ultima(tLista l){
     tPosicion ultima = (tPosicion)l->siguiente;
     tPosicion indirecta = (tPosicion)l;
@@ -23,6 +36,10 @@ tPosicion l_ultima(tLista l){
     }
     return indirecta;
 }
+
+/**
+ Destruye la lista L, elimininando cada una de sus celdas. Los elementos almacenados en las celdas son eliminados mediante la función fEliminar parametrizada.
+**/
 
 void l_destruir(tLista* l,void (*fEliminar)(tElemento)){
     tPosicion aEliminar=(tPosicion)*l;
@@ -38,22 +55,6 @@ void l_destruir(tLista* l,void (*fEliminar)(tElemento)){
         aEliminar = siguiente;
 
     }while(siguiente!=NULL);
-    /*tPosicion primera=(tPosicion)*l;
-    tPosicion aEliminar = primera->siguiente;
-    tElemento elem;
-
-    while(aEliminar!=NULL){
-        elem = aEliminar->elemento;
-        fEliminar(elem);
-        primera->siguiente = aEliminar->siguiente;
-        aEliminar->siguiente = NULL;
-        free(aEliminar);
-        aEliminar = primera->siguiente;
-    }
-    primera->siguiente=NULL;
-    elem = primera->elemento;
-    fEliminar(elem);
-    free(primera);*/
 }
 
 
@@ -64,6 +65,10 @@ void l_destruir(tLista* l,void (*fEliminar)(tElemento)){
  L' = A,B,E,C,D
 **/
 void l_insertar(tLista l, tPosicion p, tElemento e){
+
+    if(p==NULL){
+        exit(LST_POSICION_INVALIDA);
+    }
     struct celda* nueva= (struct celda*)(malloc(sizeof(struct celda)));
     nueva->siguiente=p->siguiente;
     nueva->elemento= e;
@@ -75,13 +80,16 @@ void l_insertar(tLista l, tPosicion p, tElemento e){
  Si P es fin(L), finaliza indicando LST_POSICION_INVALIDA.
 **/
 void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
-    if (p->siguiente != NULL){
+    if (p!= NULL && p->siguiente != NULL){
         (fEliminar(p->siguiente->elemento));
         struct celda* aux;
         aux=p->siguiente;
         p->siguiente=p->siguiente->siguiente;
         aux->siguiente=NULL;
         free(aux);
+    }
+    else{
+        exit(LST_POSICION_INVALIDA);
     }
 }
 
@@ -90,11 +98,14 @@ void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
  Si P es fin(L), finaliza indicando LST_POSICION_INVALIDA.
 **/
 tElemento l_recuperar(tLista l, tPosicion p){
-    if (p->siguiente != NULL){
-        return p->siguiente->elemento;
+
+    if(p==NULL){
+        exit(LST_POSICION_INVALIDA);
     }
-    else
-        exit(1);
+    if (p->siguiente == NULL){
+        exit(LST_ELEMENTO_NULO);
+    }
+    return p->siguiente->elemento;
 }
 
 /**
@@ -102,11 +113,14 @@ tElemento l_recuperar(tLista l, tPosicion p){
  Si P es fin(L), finaliza indicando LST_NO_EXISTE_SIGUIENTE.
 **/
 tPosicion l_siguiente(tLista l, tPosicion p){
-    if (p->siguiente != NULL){
-        return p->siguiente;
+    if(p==NULL){
+        exit(LST_POSICION_INVALIDA);
     }
-    else
-        exit(2);
+    if (p->siguiente == NULL){
+        exit(LST_NO_EXISTE_SIGUIENTE);
+    }
+    return p->siguiente;
+
 }
 
 /**
@@ -114,15 +128,23 @@ tPosicion l_siguiente(tLista l, tPosicion p){
  Si P es primera(L), finaliza indicando LST_NO_EXISTE_ANTERIOR.
 **/
 tPosicion l_anterior(tLista l, tPosicion p){
-    if (p!=l){
-        tPosicion pos= l;
-        while( pos->siguiente != p){
-            pos=pos->siguiente;
-        }
-        return pos;
+    if(p==NULL){
+        exit(LST_POSICION_INVALIDA);
     }
-    else
-        exit(4);
+    if (p==l){
+        exit(LST_NO_EXISTE_ANTERIOR);
+    }
+    tPosicion pos= l;
+    while( pos!=NULL && pos->siguiente != p){
+        pos=pos->siguiente;
+    }
+
+    if(pos->siguiente==NULL){
+        exit(LST_POSICION_INVALIDA);
+    }
+    return pos;
+
+
 }
 
  /**

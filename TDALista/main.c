@@ -28,7 +28,8 @@ int main()
 
 
     //probando eliminacion de elementos
-    /*p = l_primera(lista);
+    printf("\nEliminando 5 elementos: \n");
+    p = l_primera(lista);
     tPosicion aux;
     for(int i=0;i<5;i++){
         p = l_primera(lista);
@@ -36,9 +37,9 @@ int main()
     }
 
     x= l_longitud(lista);
-    printf("Longitud de la lista: %d\n",x);
-    printf("\nEliminando 5 elementos: \n");
-    imprimirAscendente(lista);*/
+    printf("\nLongitud de la lista: %d\n",x);
+
+    imprimirAscendente(lista);
 
 
     //destruccion de la lista
@@ -49,7 +50,14 @@ int main()
     //si se intenta acceder a la lista explota todo
     //imprimirAscendente(lista);
     printf("lista eliminada");
+    tPosicion pos = l_primera(lista);
+    l_recuperar(lista,pos);
 
+
+    //Testeo de Excepciones
+
+
+return(0);
 
 }
 
@@ -58,7 +66,8 @@ int main()
 void imprimirAscendente(tLista lista){
 
     tPosicion p = l_primera(lista);
-    for(int i=0;i<10;i++){
+    int longitud = l_longitud(lista);
+    for(int i=0;i<longitud;i++){
         int* x = (int*) l_recuperar(lista,p);
         p = l_siguiente(lista,p);
         printf("%d - ",*x);
@@ -67,7 +76,9 @@ void imprimirAscendente(tLista lista){
 void imprimirDescendente(tLista lista){
 
     tPosicion p = l_ultima(lista);
-    for(int i=0;i<10;i++){
+    int longitud = l_longitud(lista);
+
+    for(int i=0;i<longitud;i++){
         int* x = (int*) l_recuperar(lista,p);
         printf("%d - ",*x);
         if(p!=l_primera(lista))
