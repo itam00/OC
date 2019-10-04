@@ -83,17 +83,17 @@ void l_insertar(tLista l, tPosicion p, tElemento e){
  Si P es fin(L), finaliza indicando LST_POSICION_INVALIDA.
 **/
 void l_eliminar(tLista l, tPosicion p, void (*fEliminar)(tElemento)){
-    if (p!= NULL && p->siguiente != NULL){
-        (fEliminar(p->siguiente->elemento));
-        struct celda* aux;
-        aux=p->siguiente;
-        p->siguiente=p->siguiente->siguiente;
-        aux->siguiente=NULL;
-        free(aux);
-    }
-    else{
+    if (p== NULL || p->siguiente == NULL){
         exit(LST_POSICION_INVALIDA);
     }
+    fEliminar(p->siguiente->elemento);
+    struct celda* aux;
+    aux=p->siguiente;
+    p->siguiente=p->siguiente->siguiente;
+    aux->siguiente=NULL;
+    free(aux);
+
+
 }
 
 /**
@@ -173,5 +173,3 @@ int l_longitud(tLista l){
      }
      return contador;
 }
-
-

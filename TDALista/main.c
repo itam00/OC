@@ -9,20 +9,25 @@ void fEliminar(tElemento elem);
 
 int main()
 {
+    //creando a la lista
     tLista lista;
     crear_lista(&lista);
+    int a = l_longitud(lista);
+    printf("tamaño de la lista: %i",a);
 
     //probando insercion de elementos
+    printf("\ninsertando 10 elementos: \n");
     tPosicion p = l_primera(lista);
     for(int i=0;i<10;i++){
         insertarEntero(lista,p,i);
         p = l_siguiente(lista,p);
     }
 
-    int x= l_longitud(lista);
-    printf("Longitud de la lista: %d\n",x);
+
     printf("Lista en orden ascendente: ");
     imprimirAscendente(lista);
+    int x= l_longitud(lista);
+    printf("\nLongitud de la lista: %d\n",x);
     printf("\nLista en orden descendente: ");
     imprimirDescendente(lista);
 
@@ -30,17 +35,38 @@ int main()
     //probando eliminacion de elementos
     printf("\nEliminando 5 elementos: \n");
     p = l_primera(lista);
-    tPosicion aux;
-    for(int i=0;i<5;i++){
+    for(int i=0;i<10;i++){
         p = l_primera(lista);
         l_eliminar(lista,p,fEliminar);
     }
 
     x= l_longitud(lista);
     printf("\nLongitud de la lista: %d\n",x);
-
+    printf("\nelementos de la lista en orden ascendente: ");
     imprimirAscendente(lista);
 
+    //volviendo a completar la lista
+
+    printf("\nVolviendo a completar la lista\n");
+    for(int i=4;i>=0;i--){
+        p= l_primera(lista);
+        insertarEntero(lista,p,i);
+    }
+    printf("lista completa: ");
+    imprimirAscendente(lista);
+    printf("\n");
+
+    //eliminando un elemento en el medio
+
+    printf("Eliminando un elemento en medio de la lista");
+    p=l_siguiente(lista,p);
+
+    l_eliminar(lista,p,fEliminar);
+
+    printf("\n");
+
+
+    imprimirAscendente(lista);
 
     //destruccion de la lista
 
@@ -50,7 +76,7 @@ int main()
     //si se intenta acceder a la lista explota todo
     //imprimirAscendente(lista);
     printf("lista eliminada");
-    l_primera(lista);
+    //l_primera(lista);
 
 
     //Testeo de Excepciones
