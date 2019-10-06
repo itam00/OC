@@ -1,7 +1,7 @@
 #ifndef ARBOL_H_INCLUDED
 #define ARBOL_H_INCLUDED
 
-#include "lista.h"
+#include "C:\Users\Alan\Desktop\UNS\Organizacion de Computadoras\proyecto orga github\OC\TDALista\lista.h"
 
 #define ARB_OPERACION_INVALIDA      10
 #define ARB_POSICION_INVALIDA       11

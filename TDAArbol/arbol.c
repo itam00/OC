@@ -1,5 +1,5 @@
 #include "arbol.h"
-#include "lista.h"
+#include "C:\Users\Alan\Desktop\UNS\Organizacion de Computadoras\proyecto orga github\OC\TDALista\lista.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -17,13 +17,15 @@ Crea la raíz de A.
 Si A no es vacío, finaliza indicando ARB_OPERACION_INVALIDA.
 **/
 extern void crear_raiz(tArbol a, tElemento e){
-    if ((*a->raiz!=NULL)
+    if ((a->raiz)!=NULL)
         exit(ARB_OPERACION_INVALIDA);
-    (*a)->raiz = (struct nodo*)(malloc(sizeof(struct nodo)));
-    (*a)->raiz->elemento=e;
-    tLista* lista= (Tlista*)(malloc(sizeof(tLista)));
-    (*a)->raiz->hijos= crear_lista(lista);
-    (*a)->raiz->padre=NULL;
+    a->raiz= (struct nodo*)(malloc(sizeof(struct nodo*)));
+    tLista* lista= (tLista*)malloc(sizeof(tLista*));
+    crear_lista(lista);
+    a->raiz->hijos=*lista;
+    a->raiz->elemento=e;
+    a->raiz->padre=NULL;
+
 }
 
 /**
@@ -70,14 +72,26 @@ extern tElemento a_recuperar(tArbol a, tNodo n){
 Recupera y retorna el nodo correspondiente a la raíz de A.
 **/
 extern tNodo a_raiz(tArbol a){
-    return (TNodo*)(a->raiz);
+    return (tNodo)(a->raiz);
 }
 
 /**
  Obtiene y retorna una lista con los nodos hijos de N en A.
 **/
 extern tLista a_hijos(tArbol a, tNodo n){
-
+    tLista* toreturn= (tLista*)(malloc(sizeof(tLista*)));
+    crear_lista(toreturn);
+    tLista hijos=n->hijos;
+    if (l_longitud(hijos)>0){
+        tPosicion actual= l_primera(hijos);
+        tPosicion aCopiar=l_primera(*toreturn);
+        while (actual!=l_fin(hijos)){
+            l_insertar(*toreturn,aCopiar,l_recuperar(hijos,actual));
+            actual=l_siguiente(hijos,actual);
+            aCopiar=l_siguiente(*toreturn,aCopiar);
+        }
+    }
+    return *toreturn;
 }
 
 /**
