@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1570388856 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.c
+	"lista.h"
+	<stdio.h>
+	<stdlib.h>
+
+1570392457 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.h
+
+1570392413 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdaarbol\main.c
+	<stdio.h>
+	<stdlib.h>
+
