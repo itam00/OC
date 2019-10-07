@@ -1,7 +1,7 @@
 #ifndef ARBOL_H_INCLUDED
 #define ARBOL_H_INCLUDED
 
-#include "lista.h"
+#include "C:\Users\mati\Documents\GitHub\OC\TDALista\lista.h"
 
 #define ARB_OPERACION_INVALIDA      10
 #define ARB_POSICION_INVALIDA       11
@@ -72,11 +72,6 @@ extern tNodo a_raiz(tArbol a);
 **/
 extern tLista a_hijos(tArbol a, tNodo n);
 
-/**
- Inicializa un nuevo árbol en *SA.
- El nuevo árbol en *SA se compone de los nodos del subárbol de A a partir de N.
- El subarbol de A a partir de N debe ser eliminado de A.
-**/
-extern void a_sub_arbol(tArbol a, tNodo n, tArbol * sa);
+
 
 #endif // ARBOL_H_INCLUDED

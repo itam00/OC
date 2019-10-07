@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1568900598 source:c:\users\mati\documents\github\oc\tdalista\lista.c
+	"lista.h"
+	<stdio.h>
+	<stdlib.h>
+
+1568730093 c:\users\mati\documents\github\oc\tdalista\lista.h
+
+1514140574 source:c:\users\mati\documents\github\oc\tdaarbol\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1570393125 source:c:\users\mati\documents\github\oc\tdaarbol\arbol.c
+	<stdio.h>
+	<stdlib.h>
+	"arbol.h"
+
+1570393515 c:\users\mati\documents\github\oc\tdaarbol\arbol.h
+	"C:\Users\mati\Documents\GitHub\OC\TDALista\lista.h"
+
+1570371290 c:\users\mati\documents\github\oc\tdaarbol\lista.h
+

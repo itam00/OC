@@ -7,6 +7,8 @@ void imprimirAscendente(tLista lista);
 void imprimirDescendente(tLista lista);
 void fEliminar(tElemento elem);
 
+
+
 int main()
 {
     //creando a la lista
