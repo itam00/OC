@@ -56,15 +56,6 @@ extern void a_destruir(tArbol * a, void (*fEliminar)(tElemento));
 Recupera y retorna el elemento del nodo N.
 */
 extern tElemento a_recuperar(tArbol a, tNodo n){
-    /*tElemento toreturn;
-    if (n==a->raiz)
-        toreturn= a->raiz->elemento;
-    else{
-        for (int i=0; i<l_longitud(a->raiz->hijos);i++){
-
-        }
-    }
-    */
     return n->elemento;
 }
 
@@ -79,19 +70,7 @@ extern tNodo a_raiz(tArbol a){
  Obtiene y retorna una lista con los nodos hijos de N en A.
 **/
 extern tLista a_hijos(tArbol a, tNodo n){
-    tLista* toreturn= (tLista*)(malloc(sizeof(tLista*)));
-    crear_lista(toreturn);
-    tLista hijos=n->hijos;
-    if (l_longitud(hijos)>0){
-        tPosicion actual= l_primera(hijos);
-        tPosicion aCopiar=l_primera(*toreturn);
-        while (actual!=l_fin(hijos)){
-            l_insertar(*toreturn,aCopiar,l_recuperar(hijos,actual));
-            actual=l_siguiente(hijos,actual);
-            aCopiar=l_siguiente(*toreturn,aCopiar);
-        }
-    }
-    return *toreturn;
+    return n->hijos;
 }
 
 /**
