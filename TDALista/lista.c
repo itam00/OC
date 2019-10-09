@@ -8,8 +8,6 @@
  Una referencia a la lista creada es referenciada en *L.
 **/
 
-(*fEliminar)(tElemento);
-
 void crear_lista(tLista* l){
     *l = (struct celda*)malloc(sizeof(struct celda));
     (*l)->elemento = NULL;

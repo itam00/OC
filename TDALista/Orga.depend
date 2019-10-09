@@ -11,15 +11,31 @@
 
 1568730093 c:\users\mati\documents\oc\orga\lista.h
 
-1570472088 source:c:\users\mati\documents\github\oc\tdalista\lista.c
+1570661122 source:c:\users\mati\documents\github\oc\tdalista\lista.c
 	"lista.h"
 	<stdio.h>
 	<stdlib.h>
 
-1568730093 c:\users\mati\documents\github\oc\tdalista\lista.h
+1570589221 c:\users\mati\documents\github\oc\tdalista\lista.h
+	"lista.h"
 
-1570472088 source:c:\users\mati\documents\github\oc\tdalista\main.c
+1570661905 source:c:\users\mati\documents\github\oc\tdalista\main.c
 	<stdio.h>
 	<stdlib.h>
+	"lista.h"
+	"arbol.h"
+
+1570661229 source:c:\users\mati\documents\github\oc\tdalista\tester.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+
+1570661805 source:c:\users\mati\documents\github\oc\tdalista\arbol.c
+	<stdio.h>
+	<stdlib.h>
+	"arbol.h"
+	"lista.h"
+
+1570661323 c:\users\mati\documents\github\oc\tdalista\arbol.h
 	"lista.h"
 
