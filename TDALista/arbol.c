@@ -155,6 +155,7 @@ void eliminarQuitarLista(tElemento nodo){
 **/
 void a_destruir(tArbol * a, void (*fEliminar)(tElemento)){
     destruirAux((*a),fEliminar,a_raiz((*a)));
+    *a = NULL;
 }
 void destruirAux(tArbol a, void (*fEliminar)(tElemento),tNodo nodo){
     tLista hijos = nodo->hijos;

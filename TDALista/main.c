@@ -6,12 +6,19 @@ void removerLista();
 tNodo nodob;
 int main()
 {
-    char a='A',b='B',c='C',x;
-    char *pa,*pb,*pc,*elem;
+   char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I';
+    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*elem;
     tNodo aux;
     pa = &a;
     pb = &b;
     pc = &c;
+    pd = &d;
+    pe = &e;
+    pf = &f;
+    pg = &g;
+    ph = &h;
+    pi = &i;
+
     tArbol arbol;
     crear_arbol(&arbol);
     crear_raiz(arbol,pa);
@@ -20,14 +27,19 @@ int main()
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pb);
 
+    a_insertar(arbol,aux,NULL,pd);
+    a_insertar(arbol,aux,NULL,pe);
+
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pc);
+
+    a_insertar(arbol,aux,NULL,pf);
+    a_insertar(arbol,aux,NULL,pg);
+    aux = a_insertar(arbol,aux,NULL,ph);
+    a_insertar(arbol,aux,NULL,pi);
+
     nodob = aux;
     imprimirArbol(arbol);
-    /*printf("el nodo raiz es: %c",*elem);
 
-    elem = (char*)a_recuperar(arbol,aux);
-
-    printf("\nEl hijo de la raiz es: %c",*elem);*/
 
 return(0);
 
@@ -49,6 +61,8 @@ void imprimirArbol(tArbol arbol){
         l_eliminar(lista,l_ultima(lista),&removerLista);
 
         c = (char*)a_recuperar(arbol,nodo);
+
+        //verificacion de que realmente son sus padres
         padre = nodo->padre;
         if(padre!=NULL){
             p = (char*)a_recuperar(arbol,padre);
@@ -69,7 +83,7 @@ void imprimirArbol(tArbol arbol){
 
         nodo = l_recuperar(lista,l_ultima(lista));
 
-
+        //se marca el fin del cada nivel
         if(nodo == NULL){
             l_eliminar(lista,l_ultima(lista),&removerLista);
             l_insertar(lista,l_primera(lista),NULL);
