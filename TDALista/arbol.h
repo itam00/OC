@@ -9,7 +9,7 @@
 
 struct nodo{
     tElemento elemento;
-    struct nodo * padre;
+    struct nodo* padre;
     tLista hijos;
 };
 

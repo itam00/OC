@@ -5,11 +5,12 @@
 
 void eliminarQuitarLista(tElemento nodo);
 void destruirAux(tArbol a, void (*fEliminar)(tElemento),tNodo nodo);
+void aux_sub_arbol();
 /**
 Inicializa un árbol vacío.
 Una referencia al árbol creado es referenciado en *A.
 **/
-extern void crear_arbol(tArbol * a){
+ void crear_arbol(tArbol * a){
     *a= (struct arbol*)(malloc(sizeof(struct arbol)));
     (*a)->raiz=NULL;
 }
@@ -18,16 +19,15 @@ extern void crear_arbol(tArbol * a){
 Crea la raíz de A.
 Si A no es vacío, finaliza indicando ARB_OPERACION_INVALIDA.
 **/
-extern void crear_raiz(tArbol a, tElemento e){
+void crear_raiz(tArbol a, tElemento e){
     if ((a->raiz)!=NULL)
         exit(ARB_OPERACION_INVALIDA);
-    a->raiz= (struct nodo*)(malloc(sizeof(struct nodo*)));
-    tLista* lista= (tLista*)malloc(sizeof(tLista*));
-    crear_lista(lista);
-    a->raiz->hijos=*lista;
+    a->raiz= (struct nodo*)malloc(sizeof(struct nodo));
+    tLista lista;
+    crear_lista(&lista);
+    a->raiz->hijos=lista;
     a->raiz->elemento=e;
     a->raiz->padre=NULL;
-
 }
 /**
 Recupera y retorna el elemento del nodo N.
@@ -58,13 +58,16 @@ tLista a_hijos(tArbol a, tNodo n){
 **/
 tNodo a_insertar(tArbol a, tNodo np, tNodo nh, tElemento e){
     tLista hermanos = np->hijos;
+    tLista nueva;
     tPosicion aux;
     tNodo nuevo;
+
     if(nh == NULL)
     {
         aux = l_fin(hermanos);
         nuevo = (struct nodo*)malloc(sizeof(struct nodo));
         l_insertar(hermanos,aux, nuevo);
+
     }
     else{
         aux = l_primera(hermanos);
@@ -79,8 +82,12 @@ tNodo a_insertar(tArbol a, tNodo np, tNodo nh, tElemento e){
         nuevo = (tNodo) malloc(sizeof(struct nodo));
         l_insertar(hermanos,aux,nuevo);
     }
+
+    crear_lista(&nueva);
+    nuevo->hijos = nueva;
     nuevo->elemento = e;
     nuevo->padre = np;
+
     return nuevo;
 }
 
@@ -167,11 +174,30 @@ void destruirAux(tArbol a, void (*fEliminar)(tElemento),tNodo nodo){
 }
 
 
+void a_sub_arbol(tArbol a, tNodo n, tArbol * sa){
+    crear_arbol(sa);
+    (*sa)->raiz=n;
+    if (n==a->raiz){
+        a->raiz=NULL;
+        (*sa)->raiz=n;
+    }
+    else{
+        tNodo padre= n->padre;
+        tPosicion actual= l_primera(padre->hijos);
+        int encontre=0;
+        while (actual != l_fin(padre->hijos) && !encontre){
+            if ( (tNodo)l_recuperar(padre->hijos,actual) == n)
+                encontre=1;
+            else
+                actual=l_siguiente(padre->hijos,actual);
+        }
+        l_eliminar(padre->hijos,actual,&aux_sub_arbol);
+        n->padre=NULL;
+    }
+}
 
-/**
-Recupera y retorna el elemento del nodo N.
-*/
-
+void aux_sub_arbol(){
+}
 /*int pertenece(tArbol a,tNodo n){
     while(n->padre!=NULL){
         n = n->padre;
