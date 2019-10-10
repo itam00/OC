@@ -74,7 +74,7 @@ tNodo a_insertar(tArbol a, tNodo np, tNodo nh, tElemento e){
         int cant = l_longitud(hermanos), encontrado = 0;
         for(int i=0;i<cant && !encontrado;i++){
             aux = aux->siguiente;
-            encontrado = l_recuperar(hermanos,aux)!=nh;
+            encontrado = l_recuperar(hermanos,aux)==nh;
         }
         if(!encontrado){
             exit(ARB_OPERACION_INVALIDA);
@@ -101,6 +101,7 @@ tNodo a_insertar(tArbol a, tNodo np, tNodo nh, tElemento e){
 void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
     tNodo padre = n->padre,aux;
     tLista hijos = n->hijos;
+
     int cantHijos = l_longitud(hijos);
     if(padre == NULL){
         if(cantHijos==1){
@@ -123,23 +124,28 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
 
         //se busca la posicion del nodo en la lista de su padre para poder agregar los hijos del nodo a eliminar
         encontrado = l_recuperar(hermanos,posNodo) == n;
-        for(int i=0;i<cantHermanos&& !encontrado;i++){
-            posNodo = l_siguiente(hermanos,posNodo);
+        while(posNodo!=l_fin(hermanos) && !encontrado){
             encontrado = l_recuperar(hermanos,posNodo) == n;
+            if(!encontrado){
+                posNodo = l_siguiente(hermanos,posNodo);
+            }
+            else{
+                printf("encontrado");
+            }
         }
 
         //se cambian los hijos del nodo a la lista de su padre
         posHijo = l_primera(hijos);
-        for(int i=0;i<cantHijos;i++){
+        while(posHijo!=l_fin(hijos)){
             aux = l_recuperar(hijos,posHijo);
             aux->padre = n->padre;  //se cambia de padre
-            l_insertar(hermanos,posNodo,l_recuperar(hijos,posHijo)); // se agrega a la lista del padre d n
+            l_insertar(hermanos,posNodo,aux); // se agrega a la lista del padre d n
             posHijo = l_siguiente(hijos,posHijo);
         }
 
         //Se elimina completamente el nodo que debe ser eliminado
         l_eliminar(hermanos,posNodo,eliminarQuitarLista); //se elimina de la lista de sus hermanos
-        l_destruir(&hijos,&eliminarQuitarLista); //se elimina la lista de hijos
+        l_destruir(&hijos,eliminarQuitarLista); //se elimina la lista de hijos
         n->padre = NULL;
         fEliminar(n->elemento);
     }
