@@ -39,3 +39,26 @@
 1570665826 c:\users\mati\documents\github\oc\tdalista\arbol.h
 	"lista.h"
 
+1570672700 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.c
+	"lista.h"
+	<stdio.h>
+	<stdlib.h>
+
+1570672747 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.h
+	"lista.h"
+
+1570673590 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+	"arbol.h"
+
+1570672746 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.h
+	"lista.h"
+
+1570672746 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.c
+	<stdio.h>
+	<stdlib.h>
+	"arbol.h"
+	"lista.h"
+

@@ -3,11 +3,12 @@
 #include "lista.h"
 #include "arbol.h"
 void removerLista();
+void imprimirArbol(tArbol arbol);
 tNodo nodob;
 int main()
 {
-   char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I';
-    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*elem;
+   char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I',j='J';
+    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*elem;
     tNodo aux;
     pa = &a;
     pb = &b;
@@ -18,6 +19,7 @@ int main()
     pg = &g;
     ph = &h;
     pi = &i;
+    pj =&j;
 
     tArbol arbol;
     crear_arbol(&arbol);
@@ -32,8 +34,9 @@ int main()
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pc);
 
-    a_insertar(arbol,aux,NULL,pf);
+    tNodo hermano=a_insertar(arbol,aux,NULL,pf);
     a_insertar(arbol,aux,NULL,pg);
+    a_insertar(arbol,aux,hermano,pj);
     aux = a_insertar(arbol,aux,NULL,ph);
     a_insertar(arbol,aux,NULL,pi);
 
