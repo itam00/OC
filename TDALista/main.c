@@ -3,7 +3,7 @@
 #include "lista.h"
 #include "arbol.h"
 void removerLista();
-
+tNodo nodob;
 int main()
 {
     char a='A',b='B',c='C',x;
@@ -21,7 +21,7 @@ int main()
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pb);
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pc);
-
+    nodob = aux;
     imprimirArbol(arbol);
     /*printf("el nodo raiz es: %c",*elem);
 
@@ -36,37 +36,42 @@ return(0);
 void imprimirArbol(tArbol arbol){
     tLista lista,hijos;
     crear_lista(&lista);
-    tNodo nodo = a_raiz(arbol),fin;
+    tPosicion pos;
+    tNodo nodo = a_raiz(arbol),padre;
 
     l_insertar(lista,l_primera(lista),nodo);
     l_insertar(lista,l_primera(lista),NULL);
-    char *c;
+    char *c,*p;
 
     while(l_longitud(lista)>1){
-        printf("%d",l_longitud(lista));
+
         nodo = l_recuperar(lista,l_ultima(lista));
-        l_eliminar(lista,l_ultima(lista),removerLista);
+        l_eliminar(lista,l_ultima(lista),&removerLista);
 
         c = (char*)a_recuperar(arbol,nodo);
-        printf("%c  -  ", *c);
+        padre = nodo->padre;
+        if(padre!=NULL){
+            p = (char*)a_recuperar(arbol,padre);
+            printf("%c<--",*p);
+        }
+        printf("%c   ", *c);
+
 
 
         //se insertan los hijos del nodo
         hijos = a_hijos(arbol,nodo);
-        nodo = l_primera(hijos);
-    printf("hola");
-        printf("%d  -  ", l_longitud(hijos));
-        while(nodo!=l_fin(hijos)){
-            nodo= l_siguiente(hijos,nodo);
+        pos = l_primera(hijos);
+        while(pos!=l_fin(hijos)){
+            nodo = l_recuperar(hijos,pos);
             l_insertar(lista,l_primera(lista),nodo);
-
+            pos= l_siguiente(hijos,pos);
         }
 
         nodo = l_recuperar(lista,l_ultima(lista));
 
 
         if(nodo == NULL){
-            l_eliminar(lista,l_ultima(lista),removerLista);
+            l_eliminar(lista,l_ultima(lista),&removerLista);
             l_insertar(lista,l_primera(lista),NULL);
             printf("\n");
         }
