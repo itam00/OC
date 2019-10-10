@@ -47,7 +47,7 @@
 1570672747 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.h
 	"lista.h"
 
-1570673590 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\main.c
+1570687134 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
@@ -56,7 +56,7 @@
 1570672746 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.h
 	"lista.h"
 
-1570672746 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.c
+1570687296 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.c
 	<stdio.h>
 	<stdlib.h>
 	"arbol.h"

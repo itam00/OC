@@ -4,12 +4,11 @@
 #include "arbol.h"
 void removerLista();
 void imprimirArbol(tArbol arbol);
-tNodo nodob;
 int main()
 {
    char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I',j='J';
-	tNodo nodob;
-    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi;
+	tNodo raizsub;
+    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi, *pj;
     tNodo aux,elim;
     pa = &a;
     pb = &b;
@@ -25,6 +24,8 @@ int main()
     tArbol arbol;
     crear_arbol(&arbol);
     crear_raiz(arbol,pa);
+    char* letra=(char*)(a_recuperar(arbol,a_raiz(arbol)));
+    printf(" El elemento guardado en la raiz es: %c \n",*letra);
 
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pb);
@@ -35,18 +36,36 @@ int main()
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pc);
     elim = aux;
 
-    tNodo hermano=a_insertar(arbol,aux,NULL,pf);
-    a_insertar(arbol,aux,NULL,pg);
+    a_insertar(arbol,aux,NULL,pf);
+    tNodo hermano=a_insertar(arbol,aux,NULL,pg);
     a_insertar(arbol,aux,hermano,pj);
     aux = a_insertar(arbol,aux,NULL,ph);
     a_insertar(arbol,aux,NULL,pi);
+    a_insertar(arbol, aux, NULL,pc);
 
-    nodob = aux;
+    raizsub = aux;
     imprimirArbol(arbol);
 
     a_eliminar(arbol,elim,removerLista);
 
     imprimirArbol(arbol);
+
+    tArbol sub;
+    a_sub_arbol(arbol,raizsub,&sub);
+    imprimirArbol(sub);
+    printf ("Los hijos del nodo h son: \n");
+
+    tLista hijos= raizsub->hijos;
+    char* caracter;
+    tNodo recuperado;
+    tPosicion actual= l_primera(hijos);
+    while (actual!=l_fin(hijos)){
+        recuperado= (tNodo)l_recuperar(hijos,actual);
+        caracter=a_recuperar(sub,recuperado);
+        printf("%c \n",*caracter);
+        actual=l_siguiente(hijos,actual);
+    }
+
     a_destruir(&arbol,removerLista);
 
 
