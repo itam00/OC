@@ -8,8 +8,9 @@ tNodo nodob;
 int main()
 {
    char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I',j='J';
-    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*elem;
-    tNodo aux;
+	tNodo nodob;
+    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi;
+    tNodo aux,elim;
     pa = &a;
     pb = &b;
     pc = &c;
@@ -25,7 +26,6 @@ int main()
     crear_arbol(&arbol);
     crear_raiz(arbol,pa);
 
-    elem = (char*)a_recuperar(arbol,a_raiz(arbol));
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pb);
 
@@ -33,6 +33,7 @@ int main()
     a_insertar(arbol,aux,NULL,pe);
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pc);
+    elim = aux;
 
     tNodo hermano=a_insertar(arbol,aux,NULL,pf);
     a_insertar(arbol,aux,NULL,pg);
@@ -42,6 +43,11 @@ int main()
 
     nodob = aux;
     imprimirArbol(arbol);
+
+    a_eliminar(arbol,elim,removerLista);
+
+    imprimirArbol(arbol);
+    a_destruir(&arbol,removerLista);
 
 
 return(0);
@@ -97,4 +103,6 @@ void imprimirArbol(tArbol arbol){
     }
 }
 void removerLista(tElemento t){}
+
+
 
