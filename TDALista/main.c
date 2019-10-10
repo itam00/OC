@@ -68,7 +68,7 @@ void imprimirArbol(tArbol arbol){
             p = (char*)a_recuperar(arbol,padre);
             printf("%c<--",*p);
         }
-        printf("%c   ", *c);
+        printf("(%c)   ", *c);
 
 
 
