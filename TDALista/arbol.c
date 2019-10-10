@@ -4,7 +4,7 @@
 #include "lista.h"
 
 void eliminarQuitarLista(tElemento nodo);
-void destruirAux(tArbol a, void (*fEliminar)(tElemento),tNodo nodo);
+void destruirAux( void (*fEliminar)(tElemento),tNodo nodo);
 void aux_sub_arbol();
 /**
 Inicializa un árbol vacío.
@@ -129,9 +129,6 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
             if(!encontrado){
                 posNodo = l_siguiente(hermanos,posNodo);
             }
-            else{
-                printf("encontrado");
-            }
         }
 
         //se cambian los hijos del nodo a la lista de su padre
@@ -141,6 +138,7 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
             aux->padre = n->padre;  //se cambia de padre
             l_insertar(hermanos,posNodo,aux); // se agrega a la lista del padre d n
             posHijo = l_siguiente(hijos,posHijo);
+            posNodo = l_siguiente(hermanos,posNodo); //DESPUES REVISAR BIEN ESTA PARTE PORQUE CREO Q NO DEBERIA SER ASI
         }
 
         //Se elimina completamente el nodo que debe ser eliminado
@@ -160,15 +158,16 @@ void eliminarQuitarLista(tElemento nodo){
  Los elementos almacenados en el árbol son eliminados mediante la función fEliminar parametrizada.
 **/
 void a_destruir(tArbol * a, void (*fEliminar)(tElemento)){
-    destruirAux((*a),fEliminar,a_raiz((*a)));
+    tNodo raiz = (*a)->raiz;
+    destruirAux(eliminarQuitarLista,raiz);
     *a = NULL;
 }
-void destruirAux(tArbol a, void (*fEliminar)(tElemento),tNodo nodo){
+void destruirAux(void (*fEliminar)(tElemento),tNodo nodo){
     tLista hijos = nodo->hijos;
     tPosicion hijo = l_primera(hijos);
-    if(hijo!=NULL){
+    if(hijo!=l_fin(hijos)){
         while(hijo!=l_fin(hijos)){
-            destruirAux(a,fEliminar,l_recuperar(hijos,hijo));
+            destruirAux(*fEliminar,l_recuperar(hijos,hijo));
             hijo = l_siguiente(hijos,hijo);
         }
     }

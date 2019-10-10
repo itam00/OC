@@ -44,6 +44,7 @@ int main()
     a_eliminar(arbol,elim,removerLista);
 
     imprimirArbol(arbol);
+    a_destruir(&arbol,removerLista);
 
 
 return(0);
