@@ -7,9 +7,9 @@ void imprimirArbol(tArbol a);
 tNodo nodob;
 int main()
 {
-   char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I';
-    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi;
-    tNodo aux,elim;
+   char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I',j='J',k='K',l='L',m='M';
+    char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*pk,*pl,*pm;
+    tNodo aux,elim,hermano;
     pa = &a;
     pb = &b;
     pc = &c;
@@ -19,32 +19,74 @@ int main()
     pg = &g;
     ph = &h;
     pi = &i;
+    pj = &j;
+    pk = &k;
+    pl = &l;
+    pm = &m;
+
+    printf("creando arbol: \n");
 
     tArbol arbol;
     crear_arbol(&arbol);
     crear_raiz(arbol,pa);
 
+    printf("agregando nodos al arbol...\n");
+
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pb);
+    elim = aux;
 
-    a_insertar(arbol,aux,NULL,pd);
-    a_insertar(arbol,aux,NULL,pe);
+    hermano =a_insertar(arbol,aux,NULL,pd);
+    aux = a_insertar(arbol,aux,hermano,pe);
+    a_insertar(arbol,aux,NULL,pi);
 
     aux = a_insertar(arbol,a_raiz(arbol),NULL,pc);
-    elim = aux;
+    //elim = aux;
 
     a_insertar(arbol,aux,NULL,pf);
     a_insertar(arbol,aux,NULL,pg);
     aux = a_insertar(arbol,aux,NULL,ph);
-    a_insertar(arbol,aux,NULL,pi);
+    a_insertar(arbol,aux,NULL,pj);
 
     nodob = aux;
     imprimirArbol(arbol);
 
+    char* elem = a_recuperar(arbol,elim);
+    printf("Eliminando el nodo: %c\n",*elem);
+
     a_eliminar(arbol,elim,removerLista);
 
     imprimirArbol(arbol);
+    printf("\n\nDestruyendo el arbol...\n");
     a_destruir(&arbol,removerLista);
+    if(arbol == NULL){
+        printf("El arbol fue eliminado");
+    }
+
+    printf("\n\ncreando un nuevo arbol...\n");
+    crear_arbol(&arbol);
+    crear_raiz(arbol,pf);
+
+    printf("\ninsertando nuevos elmentos en el arbol..\n");
+
+    aux = a_insertar(arbol,a_raiz(arbol),NULL,pg);
+    elim = a_raiz(arbol);
+
+    a_insertar(arbol,aux,NULL,ph);
+    a_insertar(arbol,aux,NULL,pi);
+
+    imprimirArbol(arbol);
+
+    elem = a_recuperar(arbol,elim);
+    printf("\nEliminando el nodo: %c\n",*elem);
+
+    a_eliminar(arbol,elim,removerLista);
+    imprimirArbol(arbol);
+
+    printf("\n\ninsertando nuevos elementos en la raiz..\n");
+    a_insertar(arbol,a_raiz(arbol),NULL,pj);
+    a_insertar(arbol,a_raiz(arbol),NULL,pk);
+    imprimirArbol(arbol);
 
 
 return(0);

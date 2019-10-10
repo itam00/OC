@@ -71,7 +71,8 @@ tNodo a_insertar(tArbol a, tNodo np, tNodo nh, tElemento e){
     }
     else{
         aux = l_primera(hermanos);
-        int cant = l_longitud(hermanos), encontrado = 0;
+        int cant = l_longitud(hermanos), encontrado;
+        encontrado = l_recuperar(hermanos,aux)==nh;
         for(int i=0;i<cant && !encontrado;i++){
             aux = aux->siguiente;
             encontrado = l_recuperar(hermanos,aux)==nh;
@@ -124,11 +125,10 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
 
         //se busca la posicion del nodo en la lista de su padre para poder agregar los hijos del nodo a eliminar
         encontrado = l_recuperar(hermanos,posNodo) == n;
+
         while(posNodo!=l_fin(hermanos) && !encontrado){
+            posNodo = l_siguiente(hermanos,posNodo);
             encontrado = l_recuperar(hermanos,posNodo) == n;
-            if(!encontrado){
-                posNodo = l_siguiente(hermanos,posNodo);
-            }
         }
 
         //se cambian los hijos del nodo a la lista de su padre
@@ -160,6 +160,7 @@ void eliminarQuitarLista(tElemento nodo){
 void a_destruir(tArbol * a, void (*fEliminar)(tElemento)){
     tNodo raiz = (*a)->raiz;
     destruirAux(eliminarQuitarLista,raiz);
+    free(*a);
     *a = NULL;
 }
 void destruirAux(void (*fEliminar)(tElemento),tNodo nodo){
