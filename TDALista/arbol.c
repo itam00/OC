@@ -5,9 +5,7 @@
 
 void eliminarQuitarLista(tElemento nodo);
 void destruirAux( void (*fEliminar)(tElemento),tNodo nodo);
-void aux_sub_arbol(){
-}
-
+void aux_sub_arbol();
 /**
 Inicializa un árbol vacío.
 Una referencia al árbol creado es referenciado en *A.
@@ -123,8 +121,7 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
     else{
         tLista hermanos = padre->hijos;
         tPosicion posNodo= l_primera(hermanos),posHijo;
-        int encontrado = 0;
-        //cantHermanos = l_longitud(hermanos),
+        int cantHermanos = l_longitud(hermanos),encontrado = 0;
 
         //se busca la posicion del nodo en la lista de su padre para poder agregar los hijos del nodo a eliminar
         encontrado = l_recuperar(hermanos,posNodo) == n;
@@ -141,7 +138,7 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
             aux->padre = n->padre;  //se cambia de padre
             l_insertar(hermanos,posNodo,aux); // se agrega a la lista del padre d n
             posHijo = l_siguiente(hijos,posHijo);
-            posNodo = l_siguiente(hermanos,posNodo); //DESPUES REVISAR BIEN ESTA PARTE PORQUE CREO Q NO DEBERIA SER ASI
+            posNodo = l_siguiente(hermanos,posNodo);
         }
 
         //Se elimina completamente el nodo que debe ser eliminado
@@ -206,6 +203,8 @@ void a_sub_arbol(tArbol a, tNodo n, tArbol * sa){
     }
 }
 
+void aux_sub_arbol(){
+}
 /*int pertenece(tArbol a,tNodo n){
     while(n->padre!=NULL){
         n = n->padre;

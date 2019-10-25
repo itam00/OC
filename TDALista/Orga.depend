@@ -19,7 +19,7 @@
 1570589221 c:\users\mati\documents\github\oc\tdalista\lista.h
 	"lista.h"
 
-1570712183 source:c:\users\mati\documents\github\oc\tdalista\main.c
+1570714673 source:c:\users\mati\documents\github\oc\tdalista\main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
@@ -30,13 +30,13 @@
 	<stdlib.h>
 	"lista.h"
 
-1570710845 source:c:\users\mati\documents\github\oc\tdalista\arbol.c
+1570716364 source:c:\users\mati\documents\github\oc\tdalista\arbol.c
 	<stdio.h>
 	<stdlib.h>
 	"arbol.h"
 	"lista.h"
 
-1570665826 c:\users\mati\documents\github\oc\tdalista\arbol.h
+1570716364 c:\users\mati\documents\github\oc\tdalista\arbol.h
 	"lista.h"
 
 1570672700 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.c
