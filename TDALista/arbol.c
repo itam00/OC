@@ -5,7 +5,9 @@
 
 void eliminarQuitarLista(tElemento nodo);
 void destruirAux( void (*fEliminar)(tElemento),tNodo nodo);
-void aux_sub_arbol();
+void aux_sub_arbol(){
+}
+
 /**
 Inicializa un árbol vacío.
 Una referencia al árbol creado es referenciado en *A.
@@ -121,7 +123,8 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
     else{
         tLista hermanos = padre->hijos;
         tPosicion posNodo= l_primera(hermanos),posHijo;
-        int cantHermanos = l_longitud(hermanos),encontrado = 0;
+        int encontrado = 0;
+        //cantHermanos = l_longitud(hermanos),
 
         //se busca la posicion del nodo en la lista de su padre para poder agregar los hijos del nodo a eliminar
         encontrado = l_recuperar(hermanos,posNodo) == n;
@@ -203,8 +206,6 @@ void a_sub_arbol(tArbol a, tNodo n, tArbol * sa){
     }
 }
 
-void aux_sub_arbol(){
-}
 /*int pertenece(tArbol a,tNodo n){
     while(n->padre!=NULL){
         n = n->padre;
