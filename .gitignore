@@ -1,0 +1,16 @@
+
+*.exe
+*.o
+*.exe
+*.o
+*.depend
+*.layout
+*.cbp
+TDALista/bin/Debug/Orga.exe
+TDALista/obj/Debug/main.o
+TDALista/Orga.cbp
+TDALista/Orga.layout
+TDALista/partida.h
+TDALista/Orga.depend
+*.cbp
+*.depend
