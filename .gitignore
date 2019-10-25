@@ -14,3 +14,7 @@ TDALista/partida.h
 TDALista/Orga.depend
 *.cbp
 *.depend
+*.o
+*.depend
+*.layout
+*.exe

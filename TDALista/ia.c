@@ -113,6 +113,19 @@ Implementa la estrategia del algoritmo Min-Max con podas Alpha-Beta, a partir de
 **/
 static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, int beta, int jugador_max, int jugador_min){}
 
+
+/* Metodo auxiliar
+*/
+int todasOcupadas(tEstado estado){
+    int ocupadas=0;
+    for(int i=0;i<3 &&!ocupadas;i++){
+        for(int j;j<3 && !ocupadas;j++){
+            ocupadas = estado->grilla[i][j] != 0;
+        }
+    }
+    return ocupadas;
+}
+
 /**
 >>>>>  A IMPLEMENTAR   <<<<<
 Computa el valor de utilidad correspondiente al estado E, y la ficha correspondiente al JUGADOR_MAX, retornado:
@@ -135,11 +148,11 @@ static int valor_utilidad(tEstado e, int jugador_max){
     }
     if(!tateti){
         fichaGanador = e->grilla[0][0];
-        tateti = e->grilla[0][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[2][2]
+        tateti = e->grilla[0][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[2][2];
     }
     if(!tateti){
         fichaGanador = e->grilla[2][0];
-        tateti = e->grilla[2][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[0][2]
+        tateti = e->grilla[2][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[0][2];
     }
     if(tateti){
         if(fichaGanador == jugador_max){
@@ -148,9 +161,9 @@ static int valor_utilidad(tEstado e, int jugador_max){
         else{
             toReturn = IA_PIERDE_MAX;
         }
-
+    }
     else{
-        if(todasOcupada(e)){
+        if(todasOcupadas(e)){
             toReturn = IA_EMPATA_MAX;
         }
         else{
@@ -160,14 +173,6 @@ static int valor_utilidad(tEstado e, int jugador_max){
     return toReturn;
 
 
-}
-int todasOcupadas(tEstado estado){
-    int ocupadas=0;
-    for(int i=0;i<3 &&!ocupadas;i++){
-        for(int j;j<3 && !ocupada;j++){
-            ocupadas = estado->grilla[i][j] != 0;
-        }
-    }
 }
 
 /**
