@@ -123,6 +123,51 @@ Computa el valor de utilidad correspondiente al estado E, y la ficha correspondi
 **/
 
 static int valor_utilidad(tEstado e, int jugador_max){
+    int tateti=0,toReturn,fichaGanador;
+
+    for(int i=0;i<3&& !tateti;i++){
+        fichaGanador = e->grilla[i][i];
+        tateti = e->grilla[i][0] == e->grilla[i][1] && e->grilla[i][1] == e->grilla[i][2];
+    }
+    for(int i=0;i<3&& !tateti;i++){
+        fichaGanador = e->grilla[i][i];
+        tateti = e->grilla[0][i] == e->grilla[1][i] && e->grilla[1][i] == e->grilla[2][i];
+    }
+    if(!tateti){
+        fichaGanador = e->grilla[0][0];
+        tateti = e->grilla[0][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[2][2]
+    }
+    if(!tateti){
+        fichaGanador = e->grilla[2][0];
+        tateti = e->grilla[2][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[0][2]
+    }
+    if(tateti){
+        if(fichaGanador == jugador_max){
+            toReturn = IA_GANA_MAX;
+        }
+        else{
+            toReturn = IA_PIERDE_MAX;
+        }
+
+    else{
+        if(todasOcupada(e)){
+            toReturn = IA_EMPATA_MAX;
+        }
+        else{
+            toReturn = IA_NO_TERMINO;
+        }
+    }
+    return toReturn;
+
+
+}
+int todasOcupadas(tEstado estado){
+    int ocupadas=0;
+    for(int i=0;i<3 &&!ocupadas;i++){
+        for(int j;j<3 && !ocupada;j++){
+            ocupadas = estado->grilla[i][j] != 0;
+        }
+    }
 }
 
 /**
