@@ -28,7 +28,7 @@ void crear_busqueda_adversaria(tBusquedaAdversaria * b, tPartida p){
             estado->grilla[i][j] = p->tablero->grilla[i][j];
         }
     }
-	
+
 	// Se asume que el estado de la partida es PART_EN_JUEGO por lo que, la utilidad del estado
 	// inicialmente es IA_NO_TERMINO
     estado->utilidad = IA_NO_TERMINO;
@@ -47,15 +47,43 @@ void crear_busqueda_adversaria(tBusquedaAdversaria * b, tPartida p){
     ejecutar_min_max((*b));
 }
 
-/** 
+/**
 >>>>>  A IMPLEMENTAR   <<<<<
 */
-void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){}
+void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
+    ejecutar_min_max(b);
+    int mayor=0;
+    tArbol arbol= arbol;
+    tNodo raiz= a_raiz(arbol);
+    tEstado estadoActual= (tEstado) a_recuperar(arbol,raiz);
+    tEstado estadoProximo;
+    tLista listaHijos= a_hijos(arbol,raiz);
+    tPosicion actual=l_primera(listaHijos);
+    tNodo hijoActual;
+    tEstado estadoHijoActual;
+    while (actual!=l_fin(listaHijos) && mayor!=1){
+        hijoActual=(tNodo)(actual);
+        estadoHijoActual=(tEstado)a_recuperar(arbol,hijoActual);
+        if (estadoHijoActual->utilidad>mayor){
+            mayor=estadoHijoActual->utilidad;
+            estadoProximo=estadoHijoActual;
+        }
+    }
+    diferencia_estados(estadoActual,estadoProximo,x,y);
+}
+
+void destruirEstado(tElemento e){
+    free(e);
+}
 
 /**
 >>>>>  A IMPLEMENTAR   <<<<<
 **/
-void destruir_busqueda_adversaria(tBusquedaAdversaria * b){}
+void destruir_busqueda_adversaria(tBusquedaAdversaria * b){
+    a_destruir(&(*b)->arbol_busqueda,destruirEstado);
+    free(*b);
+    b=NULL;
+}
 
 // ===============================================================================================================
 // FUNCIONES Y PROCEDEMIENTOS AUXILIARES
@@ -93,14 +121,16 @@ Computa el valor de utilidad correspondiente al estado E, y la ficha correspondi
 - IA_PIERDE_MAX si el estado E refleja una jugada en el que el JUGADOR_MAX perdió la partida.
 - IA_NO_TERMINO en caso contrario.
 **/
-static int valor_utilidad(tEstado e, int jugador_max){}
+
+static int valor_utilidad(tEstado e, int jugador_max){
+}
 
 /**
 >>>>>  A IMPLEMENTAR   <<<<<
 Computa y retorna una lista con aquellos estados que representan estados sucesores al estado E.
 Un estado sucesor corresponde a la clonación del estado E, junto con la incorporación de un nuevo movimiento
 realizado por el jugador cuya ficha es FICHA_JUGADOR por sobre una posición que se encuentra libre en el estado E.
-La lista de estados sucesores se debe ordenar de forma aleatoria, de forma tal que una doble invocación de la función 
+La lista de estados sucesores se debe ordenar de forma aleatoria, de forma tal que una doble invocación de la función
 estados_sucesores(estado, ficha) retornaría dos listas L1 y L2 tal que:
 - L1 y L2 tienen exactamente los mismos estados sucesores de ESTADO a partir de jugar FICHA.
 - El orden de los estado en L1 posiblemente sea diferente al orden de los estados en L2.
@@ -111,15 +141,23 @@ static tLista estados_sucesores(tEstado e, int ficha_jugador){}
 >>>>>  A IMPLEMENTAR   <<<<<
 Inicializa y retorna un nuevo estado que resulta de la clonación del estado E.
 Para esto copia en el estado a retornar los valores actuales de la grilla del estado E, como su valor
-de utilidad. 
+de utilidad.
 **/
-static tEstado clonar_estado(tEstado e){}
+static tEstado clonar_estado(tEstado e){
+    tEstado nuevo= (tEstado)(malloc(sizeof(struct estado)));
+    for (int i=0; i<3;i++)
+        for( int j=0; j<3; j++)
+            nuevo->grilla[i][j]= e->grilla[i][j];
+    nuevo->utilidad=e->utilidad;
+    return nuevo;
+}
 
 /**
 Computa la diferencia existente entre dos estados.
 Se asume que entre ambos existe sólo una posición en el que la ficha del estado anterior y nuevo difiere.
 La posición en la que los estados difiere, es retornada en los parámetros *X e *Y.
 **/
+
 static void diferencia_estados(tEstado anterior, tEstado nuevo, int * x, int * y){
     int i,j, hallado = 0;
     for(i=0; i<3 && !hallado; i++){

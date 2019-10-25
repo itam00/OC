@@ -6,7 +6,7 @@ void removerLista();
 void imprimirArbol(tArbol a);
 void probar();
 tNodo nodob;
-int probar()
+void probar()
 {
    char a='A',b='B',c='C',d = 'D',e='E',f='F',g='G',h='H',i='I',j='J',k='K';
     char *pa,*pb,*pc,*pd,*pe,*pf,*pg,*ph,*pi,*pj,*pk;
