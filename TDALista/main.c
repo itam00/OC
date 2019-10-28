@@ -4,7 +4,6 @@
 #include "arbol.h"
 #include "ia.h"
 
-
 int main(){
     int modo;
     printf("TA-TE-TI\n");
@@ -65,6 +64,16 @@ void humanoVsHumano(char jugador1[50],char jugador2[50]){
 
 }
 
+int esTerminal(tTablero t){
+    int ocupadas=1;
+    for(int i=0;i<3 && ocupadas;i++){
+        for(int j=0;j<3 && ocupadas;j++){
+            ocupadas = t->grilla[i][j] != 0;
+        }
+    }
+    return ocupadas;
+}
+
 int verificarGanador(tTablero e){
     int tateti=0,toReturn,fichaGanador;
 
@@ -93,7 +102,7 @@ int verificarGanador(tTablero e){
         }
     }
     else{
-        if(todasOcupadas(e)){
+        if(esTerminal(e)){
             toReturn = PART_EMPATE;
         }
         else{

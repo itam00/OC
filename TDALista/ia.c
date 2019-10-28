@@ -11,6 +11,20 @@ static int valor_utilidad(tEstado e, int jugador_max);
 static tLista estados_sucesores(tEstado e, int ficha_jugador);
 static void diferencia_estados(tEstado anterior, tEstado nuevo, int * x, int * y);
 static tEstado clonar_estado(tEstado e);
+static int es_estado_terminal(tEstado estado);
+static int min(int x, int y){
+    if (x<y)
+        return x;
+    else
+        return y;
+}
+static int max(int x, int y){
+    if (x>y)
+        return x;
+    else
+        return y;
+}
+
 
 void crear_busqueda_adversaria(tBusquedaAdversaria * b, tPartida p){
     int i, j;
@@ -55,7 +69,7 @@ void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
     int mayor=0;
     tArbol arbol= arbol;
     tNodo raiz= a_raiz(arbol);
-    tEstado estadoActual= (tEstado) a_recuperar(arbol,raiz);
+    tEstado estadoActual = (tEstado) a_recuperar(arbol,raiz);
     tEstado estadoProximo;
     tLista listaHijos= a_hijos(arbol,raiz);
     tPosicion actual=l_primera(listaHijos);
@@ -111,12 +125,50 @@ Implementa la estrategia del algoritmo Min-Max con podas Alpha-Beta, a partir de
 - ALPHA y BETA indican sendos valores correspondientes a los nodos ancestros a N en el árbol de búsqueda A.
 - JUGADOR_MAX y JUGADOR_MIN indican las fichas con las que juegan los respectivos jugadores.
 **/
-static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, int beta, int jugador_max, int jugador_min){}
+static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, int beta, int jugador_max, int jugador_min){
+    tEstado estado= (tEstado)(n->elemento);
+    int mejor_valor_sucesores;
+    int valor_sucesor;
+    tLista listaSucesores;
+    tPosicion actual;
+    tNodo nodoNuevo;
+    tEstado estado_sucesor;
+    if (es_estado_terminal(estado))
+        estado->utilidad=valor_utilidad(estado,jugador_max);
+    if (es_max){
+        mejor_valor_sucesores= IA_INFINITO_NEG;
+        listaSucesores=estados_sucesores(estado,jugador_max);
+        actual= l_primera(listaSucesores);
+        while (beta>alpha && actual!=l_fin(listaSucesores)){
+            estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
+            nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
+            crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
+            valor_sucesor= estado_sucesor->utilidad;
+            mejor_valor_sucesores= max(mejor_valor_sucesores,estado_sucesor->utilidad);
+            alpha= max(alpha,mejor_valor_sucesores);
+        }
+        estado->utilidad=mejor_valor_sucesores;
+    }
+    else{
+        mejor_valor_sucesores=IA_INFINITO_POS;
+        listaSucesores=estados_sucesores(estado,jugador_max);
+        actual= l_primera(listaSucesores);
+        while (beta>alpha && actual!=l_fin(listaSucesores)){
+            estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
+            nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
+            crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
+            valor_sucesor= estado_sucesor->utilidad;
+            mejor_valor_sucesores= min(mejor_valor_sucesores,estado_sucesor->utilidad);
+            alpha= min(alpha,mejor_valor_sucesores);
+        }
+        estado->utilidad=mejor_valor_sucesores;
+    }
 
+}
 
 /* Metodo auxiliar
 */
-int todasOcupadas(tEstado estado){
+int es_estado_terminal(tEstado estado){
     int ocupadas=1;
     for(int i=0;i<3 && ocupadas;i++){
         for(int j=0;j<3 && ocupadas;j++){
@@ -140,19 +192,19 @@ static int valor_utilidad(tEstado e, int jugador_max){
 
     for(int i=0;i<3&& !tateti;i++){
         fichaGanador = e->grilla[i][i];
-        tateti = e->grilla[i][0] == e->grilla[i][1] && e->grilla[i][1] == e->grilla[i][2];
+        tateti = fichaGanador!=0 && e->grilla[i][0] == e->grilla[i][1] && e->grilla[i][1] == e->grilla[i][2];
     }
     for(int i=0;i<3&& !tateti;i++){
         fichaGanador = e->grilla[i][i];
-        tateti = e->grilla[0][i] == e->grilla[1][i] && e->grilla[1][i] == e->grilla[2][i];
+        tateti = fichaGanador!=0 && e->grilla[0][i] == e->grilla[1][i] && e->grilla[1][i] == e->grilla[2][i];
     }
     if(!tateti){
         fichaGanador = e->grilla[0][0];
-        tateti = e->grilla[0][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[2][2];
+        tateti = fichaGanador!=0 && e->grilla[0][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[2][2];
     }
     if(!tateti){
         fichaGanador = e->grilla[2][0];
-        tateti = e->grilla[2][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[0][2];
+        tateti = fichaGanador!=0 && e->grilla[2][0] == e->grilla[1][1] && e->grilla[1][1] == e->grilla[0][2];
     }
     if(tateti){
         if(fichaGanador == jugador_max){
@@ -163,7 +215,7 @@ static int valor_utilidad(tEstado e, int jugador_max){
         }
     }
     else{
-        if(todasOcupadas(e)){
+        if(es_estado_terminal(e)){
             toReturn = IA_EMPATA_MAX;
         }
         else{
