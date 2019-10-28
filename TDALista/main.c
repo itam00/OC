@@ -43,7 +43,7 @@ void humanoVsHumano(char jugador1[50],char jugador2[50]){
         }
         printf("\nIngrese la fila (0-2): ");
         scanf("%i",&fil);
-        printf("\nIngrese la columna (0,2): ");
+        printf("\nIngrese la columna (0-2): ");
         scanf("%i",&col);
         nuevo_movimiento(partida,fil,col);
         printf("\n\n");
@@ -51,7 +51,6 @@ void humanoVsHumano(char jugador1[50],char jugador2[50]){
     }
 
     mostrarEstado(partida->tablero);
-
     switch(partida->estado){
     case PART_EMPATE:
         printf("\nHubo un empate");

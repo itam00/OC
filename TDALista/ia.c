@@ -117,9 +117,9 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
 /* Metodo auxiliar
 */
 int todasOcupadas(tEstado estado){
-    int ocupadas=0;
-    for(int i=0;i<3 &&!ocupadas;i++){
-        for(int j;j<3 && !ocupadas;j++){
+    int ocupadas=1;
+    for(int i=0;i<3 && ocupadas;i++){
+        for(int j=0;j<3 && ocupadas;j++){
             ocupadas = estado->grilla[i][j] != 0;
         }
     }

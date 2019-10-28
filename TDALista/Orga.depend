@@ -19,7 +19,7 @@
 1570589221 c:\users\mati\documents\github\oc\tdalista\lista.h
 	"lista.h"
 
-1572276188 source:c:\users\mati\documents\github\oc\tdalista\main.c
+1572286045 source:c:\users\mati\documents\github\oc\tdalista\main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
@@ -86,7 +86,7 @@
 
 1572045616 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\partida.h
 
-1572208814 source:c:\users\mati\documents\github\oc\tdalista\ia.c
+1572286369 source:c:\users\mati\documents\github\oc\tdalista\ia.c
 	<stdlib.h>
 	"lista.h"
 	"arbol.h"
