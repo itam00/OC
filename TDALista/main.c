@@ -7,20 +7,27 @@
 int main(){
     int modo;
     printf("TA-TE-TI\n");
+    char jugador1[50];
     while(modo!=1 || modo!=2){
         printf("\nSeleccione un modo para comenzar:\n");
         printf("1: Humano vs Humano\n2: Humano vs Maquina\n");
         scanf("%i",&modo);
         if(modo == 1){
-            char jugador1[50],jugador2[50];
+            int jugador2[50];
             printf("Ingrese el nombre del jugador 1:");
             scanf("%s",jugador1);
             printf("\nIngrese el nombre del jugador 2:");
             scanf("%s",jugador2);
             printf("\n");
             humanoVsHumano(jugador1,jugador2);
-
         }
+        else{
+            printf("Ingrese el nombre del jugador 1:");
+            scanf("%s",jugador1);
+            humanoVsMaquina(jugador1);
+            printf("\n");
+        }
+
     }
 
 }
@@ -61,8 +68,44 @@ void humanoVsHumano(char jugador1[50],char jugador2[50]){
         printf("\nGana %s",partida->nombre_jugador_2);
         break;
     }
-
 }
+
+    void humanoVsMaquina(char jugador1[50]){
+        int fil,col;
+        tPartida partida;
+        nueva_partida(&partida,PART_MODO_USUARIO_VS_AGENTE_IA,PART_JUGADOR_1,jugador1,"maquina");
+        while(partida->estado==PART_EN_JUEGO){
+            mostrarEstado(partida->tablero);
+            printf("Turno de %s",partida->nombre_jugador_1);
+            printf("\nIngrese la fila (0-2): ");
+            scanf("%i",&fil);
+            printf("\nIngrese la columna (0-2): ");
+            scanf("%i",&col);
+            nuevo_movimiento(partida,fil,col);
+            printf("\n\n");
+            partida->estado = verificarGanador(partida->tablero);
+            if (partida->estado==PART_EN_JUEGO){
+                printf("Juega la MAQUINOLA");
+                tBusquedaAdversaria b;
+                crear_busqueda_adversaria(&b,partida);
+                printf("ssssss");
+                proximo_movimiento(b,&fil,&col);
+            }
+        }
+
+        mostrarEstado(partida->tablero);
+        switch(partida->estado){
+        case PART_EMPATE:
+            printf("\nHubo un empate");
+            break;
+        case PART_GANA_JUGADOR_1:
+            printf("\nGana %s",partida->nombre_jugador_1);
+            break;
+        case PART_GANA_JUGADOR_2:
+            printf("\nGana la maquina");
+            break;
+        }
+    }
 
 int esTerminal(tTablero t){
     int ocupadas=1;

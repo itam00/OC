@@ -112,7 +112,6 @@ static void ejecutar_min_max(tBusquedaAdversaria b){
     tNodo r = a_raiz(a);
     int jugador_max = b->jugador_max;
     int jugador_min = b->jugador_min;
-
     crear_sucesores_min_max(a, r, 1, IA_INFINITO_NEG, IA_INFINITO_POS, jugador_max, jugador_min);
 }
 
@@ -133,35 +132,39 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
     tPosicion actual;
     tNodo nodoNuevo;
     tEstado estado_sucesor;
-    if (es_estado_terminal(estado))
+    if (es_estado_terminal(estado)){
         estado->utilidad=valor_utilidad(estado,jugador_max);
-    if (es_max){
-        mejor_valor_sucesores= IA_INFINITO_NEG;
-        listaSucesores=estados_sucesores(estado,jugador_max);
-        actual= l_primera(listaSucesores);
-        while (beta>alpha && actual!=l_fin(listaSucesores)){
-            estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-            nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
-            crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
-            valor_sucesor= estado_sucesor->utilidad;
-            mejor_valor_sucesores= max(mejor_valor_sucesores,estado_sucesor->utilidad);
-            alpha= max(alpha,mejor_valor_sucesores);
-        }
-        estado->utilidad=mejor_valor_sucesores;
+        printf("eeeee");
     }
     else{
-        mejor_valor_sucesores=IA_INFINITO_POS;
-        listaSucesores=estados_sucesores(estado,jugador_max);
-        actual= l_primera(listaSucesores);
-        while (beta>alpha && actual!=l_fin(listaSucesores)){
-            estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-            nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
-            crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
-            valor_sucesor= estado_sucesor->utilidad;
-            mejor_valor_sucesores= min(mejor_valor_sucesores,estado_sucesor->utilidad);
-            alpha= min(alpha,mejor_valor_sucesores);
+        if (es_max){
+            mejor_valor_sucesores= IA_INFINITO_NEG;
+            listaSucesores=estados_sucesores(estado,jugador_max);
+            actual= l_primera(listaSucesores);
+            while (beta>alpha && actual!=l_fin(listaSucesores)){
+                estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
+                nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
+                crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
+                valor_sucesor= estado_sucesor->utilidad;
+                mejor_valor_sucesores= max(mejor_valor_sucesores,estado_sucesor->utilidad);
+                alpha= max(alpha,mejor_valor_sucesores);
+            }
+            estado->utilidad=mejor_valor_sucesores;
         }
-        estado->utilidad=mejor_valor_sucesores;
+        else{
+            mejor_valor_sucesores=IA_INFINITO_POS;
+            listaSucesores=estados_sucesores(estado,jugador_max);
+            actual= l_primera(listaSucesores);
+            while (beta>alpha && actual!=l_fin(listaSucesores)){
+                estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
+                nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
+                crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
+                valor_sucesor= estado_sucesor->utilidad;
+                mejor_valor_sucesores= min(mejor_valor_sucesores,estado_sucesor->utilidad);
+                alpha= min(alpha,mejor_valor_sucesores);
+            }
+            estado->utilidad=mejor_valor_sucesores;
+        }
     }
 
 }
