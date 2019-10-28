@@ -185,7 +185,20 @@ estados_sucesores(estado, ficha) retornaría dos listas L1 y L2 tal que:
 - L1 y L2 tienen exactamente los mismos estados sucesores de ESTADO a partir de jugar FICHA.
 - El orden de los estado en L1 posiblemente sea diferente al orden de los estados en L2.
 **/
-static tLista estados_sucesores(tEstado e, int ficha_jugador){}
+static tLista estados_sucesores(tEstado e, int ficha_jugador){
+    tLista lista;
+    crear_lista(&lista);
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            if(e->grilla[i][j]==0){
+                tEstado nuevo = clonar_estado(e);
+                nuevo->grilla[i][j] = ficha_jugador;
+                l_insertar(lista,l_primera(lista),nuevo);
+            }
+        }
+    }
+    return lista;
+}
 
 /**
 >>>>>  A IMPLEMENTAR   <<<<<

@@ -19,11 +19,12 @@
 1570589221 c:\users\mati\documents\github\oc\tdalista\lista.h
 	"lista.h"
 
-1570714673 source:c:\users\mati\documents\github\oc\tdalista\main.c
+1572276188 source:c:\users\mati\documents\github\oc\tdalista\main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
 	"arbol.h"
+	"ia.h"
 
 1570661229 source:c:\users\mati\documents\github\oc\tdalista\tester.c
 	<stdio.h>
@@ -84,4 +85,31 @@
 	"partida.h"
 
 1572045616 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\partida.h
+
+1572208814 source:c:\users\mati\documents\github\oc\tdalista\ia.c
+	<stdlib.h>
+	"lista.h"
+	"arbol.h"
+	"ia.h"
+
+1571320225 c:\users\mati\documents\github\oc\tdalista\ia.h
+	"arbol.h"
+	"partida.h"
+
+1571320253 c:\users\mati\documents\github\oc\tdalista\partida.h
+
+1572045909 source:c:\users\mati\documents\github\oc\tdalista\testerarbol.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+	"arbol.h"
+
+1572276597 source:c:\users\mati\documents\github\oc\tdalista\partida.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"ia.h"
+	"arbol.h"
+	"partida.h"
+	"lista.h"
 

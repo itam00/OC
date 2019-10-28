@@ -96,8 +96,6 @@ void probar()
     imprimirArbol(arbol);
 
 
-return(0);
-
 }
 
 void imprimirArbol(tArbol arbol){
