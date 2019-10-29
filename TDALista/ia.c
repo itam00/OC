@@ -132,6 +132,8 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
     tPosicion actual;
     tNodo nodoNuevo;
     tEstado estado_sucesor;
+
+
     if (estado->utilidad == IA_NO_TERMINO){
         if (es_max){
             mejor_valor_sucesores= IA_INFINITO_NEG;
@@ -158,7 +160,7 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             actual= l_primera(listaSucesores);
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-                estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_min);
+                estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_max);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
                 valor_sucesor= estado_sucesor->utilidad;
