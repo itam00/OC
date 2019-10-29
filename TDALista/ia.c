@@ -76,7 +76,13 @@ void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
     tEstado estadoHijoActual;
     while (actual!=l_fin(listaHijos) && mayor!=IA_GANA_MAX){
         hijoActual=(tNodo)l_recuperar(listaHijos,actual);
+        printf("aaaacacacascfwqrr");
         estadoHijoActual=(tEstado)a_recuperar(arbol,hijoActual);
+        if (estadoHijoActual==NULL)
+            printf("es nulo");
+        else
+            printf("no es nulo");
+        printf("%i",estadoHijoActual->utilidad);
         if (estadoHijoActual->utilidad>mayor){
             mayor=estadoHijoActual->utilidad;
             estadoProximo=estadoHijoActual;
@@ -132,14 +138,14 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
     tPosicion actual;
     tNodo nodoNuevo;
     tEstado estado_sucesor;
-    if (estado->utilidad == IA_NO_TERMINO){
+    if (!es_estado_terminal(estado)){
         if (es_max){
             mejor_valor_sucesores= IA_INFINITO_NEG;
             listaSucesores=estados_sucesores(estado,jugador_max);
             actual= l_primera(listaSucesores);
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-                estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_max);
+                //estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_max);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
                 valor_sucesor= estado_sucesor->utilidad;
@@ -158,7 +164,7 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             actual= l_primera(listaSucesores);
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-                estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_min);
+                //estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_min);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
                 valor_sucesor= estado_sucesor->utilidad;
@@ -170,6 +176,11 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             estado->utilidad=mejor_valor_sucesores;
         }
     }
+    else
+        if(es_max)
+            estado->utilidad=valor_utilidad(estado,jugador_max);
+        else
+            estado->utilidad=valor_utilidad(estado,jugador_min);
 }
 
 /* Metodo auxiliar
