@@ -6,6 +6,7 @@
 
 int main(){
     int modo;
+
     printf("TA-TE-TI\n");
     char jugador1[50];
     while(modo!=1 || modo!=2){
@@ -88,8 +89,8 @@ void humanoVsHumano(char jugador1[50],char jugador2[50]){
                 printf("Juega la MAQUINOLA");
                 tBusquedaAdversaria b;
                 crear_busqueda_adversaria(&b,partida);
-                printf("ssssss");
                 proximo_movimiento(b,&fil,&col);
+                nuevo_movimiento(partida,fil,col);
             }
         }
 

@@ -65,7 +65,6 @@ void crear_busqueda_adversaria(tBusquedaAdversaria * b, tPartida p){
 >>>>>  A IMPLEMENTAR   <<<<<
 */
 void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
-    ejecutar_min_max(b);
     int mayor=0;
     tArbol arbol= arbol;
     tNodo raiz= a_raiz(arbol);
@@ -82,6 +81,7 @@ void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
             mayor=estadoHijoActual->utilidad;
             estadoProximo=estadoHijoActual;
         }
+        actual= l_siguiente(listaHijos,actual);
     }
     diferencia_estados(estadoActual,estadoProximo,x,y);
 }
@@ -132,11 +132,7 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
     tPosicion actual;
     tNodo nodoNuevo;
     tEstado estado_sucesor;
-    if (es_estado_terminal(estado)){
-        estado->utilidad=valor_utilidad(estado,jugador_max);
-        printf("eeeee");
-    }
-    else{
+    if (estado->utilidad == IA_NO_TERMINO){
         if (es_max){
             mejor_valor_sucesores= IA_INFINITO_NEG;
             listaSucesores=estados_sucesores(estado,jugador_max);
@@ -144,28 +140,42 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
+                //mostrarEstadoSucesor(estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
                 valor_sucesor= estado_sucesor->utilidad;
                 mejor_valor_sucesores= max(mejor_valor_sucesores,estado_sucesor->utilidad);
                 alpha= max(alpha,mejor_valor_sucesores);
+                actual = l_siguiente(listaSucesores,actual);
             }
             estado->utilidad=mejor_valor_sucesores;
         }
         else{
             mejor_valor_sucesores=IA_INFINITO_POS;
-            listaSucesores=estados_sucesores(estado,jugador_max);
+            listaSucesores=estados_sucesores(estado,jugador_min);
             actual= l_primera(listaSucesores);
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
+                //mostrarEstadoSucesor(estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
                 valor_sucesor= estado_sucesor->utilidad;
                 mejor_valor_sucesores= min(mejor_valor_sucesores,estado_sucesor->utilidad);
                 alpha= min(alpha,mejor_valor_sucesores);
+                actual = l_siguiente(listaSucesores,actual);
             }
             estado->utilidad=mejor_valor_sucesores;
         }
     }
+    else{
+        if(es_max){
+            estado->utilidad=valor_utilidad(estado,jugador_max);
+        }
+        else{
+            estado->utilidad=valor_utilidad(estado,jugador_min);
+        }
+
+    }
+
 
 }
 
@@ -286,5 +296,27 @@ static void diferencia_estados(tEstado anterior, tEstado nuevo, int * x, int * y
                 hallado = 1;
             }
         }
+    }
+}
+
+void mostrarEstadoSucesor(tEstado tablero){
+    printf("\n%c%c%c%c%c%c%c%c%c%c%c%c%c\n",206,205,205,205,206,205,205,205,206,205,205,205,206);
+    for(int i=0;i<3;i++){
+            printf("%c",186);
+        for(int j=0;j<3;j++){
+            int ficha = tablero->grilla[i][j];
+            switch(ficha){
+                case PART_JUGADOR_1:
+                    printf(" X ");
+                    break;
+                case PART_JUGADOR_2:
+                    printf(" O ");
+                    break;
+                default:
+                    printf("   ");
+            }
+            printf("%c",186);
+        }
+        printf("\n%c%c%c%c%c%c%c%c%c%c%c%c%c\n",206,205,205,205,206,205,205,205,206,205,205,205,206);
     }
 }
