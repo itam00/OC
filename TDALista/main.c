@@ -89,6 +89,7 @@ void humanoVsHumano(char jugador1[50],char jugador2[50]){
                 printf("Juega la MAQUINOLA");
                 tBusquedaAdversaria b;
                 crear_busqueda_adversaria(&b,partida);
+                printf("aaa");
                 proximo_movimiento(b,&fil,&col);
                 nuevo_movimiento(partida,fil,col);
             }
