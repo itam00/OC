@@ -72,26 +72,33 @@ void humanoVsHumano(char jugador1[50],char jugador2[50]){
 }
 
     void humanoVsMaquina(char jugador1[50]){
-        int fil,col;
+        int fil,col,valido;
         tPartida partida;
         nueva_partida(&partida,PART_MODO_USUARIO_VS_AGENTE_IA,PART_JUGADOR_1,jugador1,"maquina");
         while(partida->estado==PART_EN_JUEGO){
             mostrarEstado(partida->tablero);
+            valido=PART_SIN_MOVIMIENTO;
             printf("Turno de %s",partida->nombre_jugador_1);
-            printf("\nIngrese la fila (0-2): ");
-            scanf("%i",&fil);
-            printf("\nIngrese la columna (0-2): ");
-            scanf("%i",&col);
-            nuevo_movimiento(partida,fil,col);
-            printf("\n\n");
+            while(valido!=PART_MOVIMIENTO_OK){
+                printf("\nIngrese la fila (0-2): ");
+                scanf("%i",&fil);
+                printf("\nIngrese la columna (0-2): ");
+                scanf("%i",&col);
+                valido=nuevo_movimiento(partida,fil,col);
+                printf("\n\n");
+            }
             partida->estado = verificarGanador(partida->tablero);
             if (partida->estado==PART_EN_JUEGO){
                 printf("Juega la MAQUINOLA");
                 tBusquedaAdversaria b;
                 crear_busqueda_adversaria(&b,partida);
                 printf("aaa");
-                proximo_movimiento(b,&fil,&col);
-                nuevo_movimiento(partida,fil,col);
+                valido=PART_SIN_MOVIMIENTO;
+                while(valido!=PART_MOVIMIENTO_OK){
+                    proximo_movimiento(b,&fil,&col);
+                    valido=nuevo_movimiento(partida,fil,col);
+                    partida->estado = verificarGanador(partida->tablero);
+                }
             }
         }
 
