@@ -150,6 +150,11 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
 
 }
 
+/**
+Funcion auxiliar usaba para poder quitar los nodos de la listas sin eliminarlos, para poder seguir
+usandolos.
+**/
+
 void eliminarQuitarLista(tElemento nodo){
 }
 
@@ -163,6 +168,10 @@ void a_destruir(tArbol * a, void (*fEliminar)(tElemento)){
     free(*a);
     *a = NULL;
 }
+
+/**
+Funcion auxiliar usada para destruir la lista de manera recursiva.
+**/
 void destruirAux(void (*fEliminar)(tElemento),tNodo nodo){
     tLista hijos = nodo->hijos;
     tPosicion hijo = l_primera(hijos);
@@ -180,6 +189,11 @@ void destruirAux(void (*fEliminar)(tElemento),tNodo nodo){
     }
 }
 
+/**
+ Inicializa un nuevo árbol en *SA.
+ El nuevo árbol en *SA se compone de los nodos del subárbol de A a partir de N.
+ El subarbol de A a partir de N debe ser eliminado de A.
+**/
 
 void a_sub_arbol(tArbol a, tNodo n, tArbol * sa){
     crear_arbol(sa);
@@ -203,14 +217,10 @@ void a_sub_arbol(tArbol a, tNodo n, tArbol * sa){
     }
 }
 
+
+/**funcion auxiliar para poder quitar los nodos de la lista de hijos de un nodo
+en el arbol sin eliminarlos.
+**/
 void aux_sub_arbol(){
 }
-/*int pertenece(tArbol a,tNodo n){
-    while(n->padre!=NULL){
-        n = n->padre;
-    }
-    if(n == a_raiz())
-        return 0;
-    else
-        return 1;
-}*/
+

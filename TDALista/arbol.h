@@ -73,7 +73,9 @@ extern tNodo a_raiz(tArbol a);
 extern tLista a_hijos(tArbol a, tNodo n);
 
 /**
-
+ Inicializa un nuevo árbol en *SA.
+ El nuevo árbol en *SA se compone de los nodos del subárbol de A a partir de N.
+ El subarbol de A a partir de N debe ser eliminado de A.
 **/
 extern void a_sub_arbol(tArbol a, tNodo n, tArbol * sa);
 

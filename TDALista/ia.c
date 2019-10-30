@@ -11,7 +11,10 @@ static int valor_utilidad(tEstado e, int jugador_max);
 static tLista estados_sucesores(tEstado e, int ficha_jugador);
 static void diferencia_estados(tEstado anterior, tEstado nuevo, int * x, int * y);
 static tEstado clonar_estado(tEstado e);
-static int es_estado_terminal(tEstado estado);
+static void eliminarQuitarDeLista(tEstado estado);
+static void tableroLleno(tEstado estado);
+
+
 static int min(int x, int y){
     if (x<y)
         return x;
@@ -62,7 +65,7 @@ void crear_busqueda_adversaria(tBusquedaAdversaria * b, tPartida p){
 }
 
 /**
->>>>>  A IMPLEMENTAR   <<<<<
+Indica cual sera el proximo movimiento de la IA haciendo uso de los punteros x e y.
 */
 void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
     int mayor=IA_INFINITO_NEG;
@@ -76,13 +79,8 @@ void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
     tEstado estadoHijoActual;
     while (actual!=l_fin(listaHijos) && mayor!=IA_GANA_MAX){
         hijoActual=(tNodo)l_recuperar(listaHijos,actual);
-        printf("aaaacacacascfwqrr");
         estadoHijoActual=(tEstado)a_recuperar(arbol,hijoActual);
-        if (estadoHijoActual==NULL)
-            printf("es nulo");
-        else
-            printf("no es nulo");
-        printf("%i",estadoHijoActual->utilidad);
+
         if (estadoHijoActual->utilidad>mayor){
             mayor=estadoHijoActual->utilidad;
             estadoProximo=estadoHijoActual;
@@ -97,7 +95,7 @@ void destruirEstado(tElemento e){
 }
 
 /**
->>>>>  A IMPLEMENTAR   <<<<<
+Finaliza la busqueda binaria B, liberando toda la memoria utilizada.
 **/
 void destruir_busqueda_adversaria(tBusquedaAdversaria * b){
     a_destruir(&(*b)->arbol_busqueda,destruirEstado);
@@ -146,7 +144,7 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             actual= l_primera(listaSucesores);
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-                //estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_max);
+                estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_max);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
                 valor_sucesor= estado_sucesor->utilidad;
@@ -176,17 +174,19 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             }
             estado->utilidad=mejor_valor_sucesores;
         }
+        l_destruir(listaSucesores,estado);
     }
-    else
-        if(es_max)
-            estado->utilidad=valor_utilidad(estado,jugador_max);
-        else
-            estado->utilidad=valor_utilidad(estado,jugador_min);
+}
+/*
+Metodo auxiliar usado para quitar un estado de un lista sin eliminarlo
+*/
+void eliminarQuitarDeLista(tEstado estado){
 }
 
-/* Metodo auxiliar
+/* Metodo auxiliar que determina si el "tablero" esta completamente ocupado
+por fichas de cualquiera de los dos jugadores.
 */
-int es_estado_terminal(tEstado estado){
+int tableroLleno(tEstado estado){
     int ocupadas=1;
     for(int i=0;i<3 && ocupadas;i++){
         for(int j=0;j<3 && ocupadas;j++){
@@ -233,7 +233,7 @@ static int valor_utilidad(tEstado e, int jugador_max){
         }
     }
     else{
-        if(es_estado_terminal(e)){
+        if(tableroLleno(e)){
             toReturn = IA_EMPATA_MAX;
         }
         else{
@@ -304,24 +304,3 @@ static void diferencia_estados(tEstado anterior, tEstado nuevo, int * x, int * y
     }
 }
 
-void mostrarEstadoSucesor(tEstado tablero){
-    printf("\n%c%c%c%c%c%c%c%c%c%c%c%c%c\n",206,205,205,205,206,205,205,205,206,205,205,205,206);
-    for(int i=0;i<3;i++){
-            printf("%c",186);
-        for(int j=0;j<3;j++){
-            int ficha = tablero->grilla[i][j];
-            switch(ficha){
-                case PART_JUGADOR_1:
-                    printf(" X ");
-                    break;
-                case PART_JUGADOR_2:
-                    printf(" O ");
-                    break;
-                default:
-                    printf("   ");
-            }
-            printf("%c",186);
-        }
-        printf("\n%c%c%c%c%c%c%c%c%c%c%c%c%c\n",206,205,205,205,206,205,205,205,206,205,205,205,206);
-    }
-}
