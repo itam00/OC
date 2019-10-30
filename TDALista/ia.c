@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include <time.h>
 #include "lista.h"
 #include "arbol.h"
 #include "ia.h"
@@ -11,8 +11,8 @@ static int valor_utilidad(tEstado e, int jugador_max);
 static tLista estados_sucesores(tEstado e, int ficha_jugador);
 static void diferencia_estados(tEstado anterior, tEstado nuevo, int * x, int * y);
 static tEstado clonar_estado(tEstado e);
-static void eliminarQuitarDeLista(tEstado estado);
-static void tableroLleno(tEstado estado);
+static void eliminarQuitarDeLista(tElemento estado);
+static int tableroLleno(tEstado estado);
 
 
 static int min(int x, int y){
@@ -32,6 +32,7 @@ static int max(int x, int y){
 void crear_busqueda_adversaria(tBusquedaAdversaria * b, tPartida p){
     int i, j;
     tEstado estado;
+    srand (time(NULL));
 
     (*b) = (tBusquedaAdversaria) malloc(sizeof(struct busqueda_adversaria));
     if ((*b) == NULL) exit(IA_ERROR_MEMORIA);
@@ -174,13 +175,13 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             }
             estado->utilidad=mejor_valor_sucesores;
         }
-        l_destruir(listaSucesores,estado);
+        l_destruir(&listaSucesores,&eliminarQuitarDeLista);
     }
 }
 /*
 Metodo auxiliar usado para quitar un estado de un lista sin eliminarlo
 */
-void eliminarQuitarDeLista(tEstado estado){
+void eliminarQuitarDeLista(tElemento estado){
 }
 
 /* Metodo auxiliar que determina si el "tablero" esta completamente ocupado
@@ -258,12 +259,19 @@ estados_sucesores(estado, ficha) retornaría dos listas L1 y L2 tal que:
 static tLista estados_sucesores(tEstado e, int ficha_jugador){
     tLista lista;
     crear_lista(&lista);
+    int numeroRandom;
     for(int i=0;i<3;i++){
         for(int j=0;j<3;j++){
             if(e->grilla[i][j]==0){
                 tEstado nuevo = clonar_estado(e);
                 nuevo->grilla[i][j] = ficha_jugador;
-                l_insertar(lista,l_primera(lista),nuevo);
+                numeroRandom = rand()%2;
+                if(numeroRandom){
+                    l_insertar(lista,l_primera(lista),nuevo);
+                }
+                else{
+                    l_insertar(lista,l_fin(lista),nuevo);
+                }
             }
         }
     }
