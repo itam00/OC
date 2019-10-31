@@ -3,7 +3,7 @@
 #include "arbol.h"
 #include "lista.h"
 
-void eliminarQuitarLista(tElemento nodo);
+void eliminarSinEliminar(tElemento nodo);
 void destruirAux( void (*fEliminar)(tElemento),tNodo nodo);
 void aux_sub_arbol();
 /**
@@ -107,7 +107,7 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
     if(padre == NULL){
         if(cantHijos==1){
             aux = l_recuperar(hijos,l_primera(hijos));
-            l_eliminar(hijos,l_primera(hijos),&eliminarQuitarLista);
+            l_eliminar(hijos,l_primera(hijos),&eliminarSinEliminar);
             aux->padre = NULL;
             a->raiz = aux;
 
@@ -121,7 +121,7 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
     else{
         tLista hermanos = padre->hijos;
         tPosicion posNodo= l_primera(hermanos),posHijo;
-        int cantHermanos = l_longitud(hermanos),encontrado = 0;
+        int encontrado = 0;
 
         //se busca la posicion del nodo en la lista de su padre para poder agregar los hijos del nodo a eliminar
         encontrado = l_recuperar(hermanos,posNodo) == n;
@@ -142,8 +142,8 @@ void a_eliminar(tArbol a, tNodo n, void (*fEliminar)(tElemento)){
         }
 
         //Se elimina completamente el nodo que debe ser eliminado
-        l_eliminar(hermanos,posNodo,eliminarQuitarLista); //se elimina de la lista de sus hermanos
-        l_destruir(&hijos,eliminarQuitarLista); //se elimina la lista de hijos
+        l_eliminar(hermanos,posNodo,eliminarSinEliminar); //se elimina de la lista de sus hermanos
+        l_destruir(&hijos,eliminarSinEliminar); //se elimina la lista de hijos
         n->padre = NULL;
         fEliminar(n->elemento);
     }
@@ -155,7 +155,7 @@ Funcion auxiliar usaba para poder quitar los nodos de la listas sin eliminarlos,
 usandolos.
 **/
 
-void eliminarQuitarLista(tElemento nodo){
+void eliminarSinEliminar(tElemento nodo){
 }
 
 /**
@@ -164,7 +164,7 @@ void eliminarQuitarLista(tElemento nodo){
 **/
 void a_destruir(tArbol * a, void (*fEliminar)(tElemento)){
     tNodo raiz = (*a)->raiz;
-    destruirAux(eliminarQuitarLista,raiz);
+    destruirAux(eliminarSinEliminar,raiz);
     free(*a);
     *a = NULL;
 }
@@ -183,7 +183,7 @@ void destruirAux(void (*fEliminar)(tElemento),tNodo nodo){
     }
     else{
         nodo->padre = NULL;
-        l_destruir(&hijos,eliminarQuitarLista);    //no deberia tener ningun hijo
+        l_destruir(&hijos,eliminarSinEliminar);    //no deberia tener ningun hijo
         fEliminar(nodo->elemento);
         free(nodo);
     }
@@ -212,15 +212,10 @@ void a_sub_arbol(tArbol a, tNodo n, tArbol * sa){
             else
                 actual=l_siguiente(padre->hijos,actual);
         }
-        l_eliminar(padre->hijos,actual,&aux_sub_arbol);
+        l_eliminar(padre->hijos,actual,&eliminarSinEliminar);
         n->padre=NULL;
     }
 }
 
 
-/**funcion auxiliar para poder quitar los nodos de la lista de hijos de un nodo
-en el arbol sin eliminarlos.
-**/
-void aux_sub_arbol(){
-}
 
