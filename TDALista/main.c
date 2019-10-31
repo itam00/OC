@@ -102,29 +102,27 @@ void humanoVsMaquina(char jugador1[50],int jugadorInicial){
 
     while(partida->estado==PART_EN_JUEGO){
         imprimirTablero(partida->tablero);
-        valido=PART_SIN_MOVIMIENTO;
-        printf("Turno de %s",partida->nombre_jugador_1);
-        while(valido!=PART_MOVIMIENTO_OK){
-            printf("\nIngrese la fila (0-2): ");
-            scanf("%i",&fil);
-            printf("\nIngrese la columna (0-2): ");
-            scanf("%i",&col);
-            valido=nuevo_movimiento(partida,fil,col);
-            printf("\n\n");
-        }
-        imprimirTablero(partida->tablero);
-        partida->estado = verificarGanador(partida->tablero);
-        if (partida->estado==PART_EN_JUEGO){
-            printf("Juega la MAQUINOLA");
-            tBusquedaAdversaria b;
-            crear_busqueda_adversaria(&b,partida);
+
+        if(partida->turno_de==PART_JUGADOR_1){
+            printf("Turno de %s",partida->nombre_jugador_1);
             valido=PART_SIN_MOVIMIENTO;
             while(valido!=PART_MOVIMIENTO_OK){
-                proximo_movimiento(b,&fil,&col);
+                printf("\nIngrese la fila (0-2): ");
+                scanf("%i",&fil);
+                printf("\nIngrese la columna (0-2): ");
+                scanf("%i",&col);
                 valido=nuevo_movimiento(partida,fil,col);
-                partida->estado = verificarGanador(partida->tablero);
+                printf("\n\n");
             }
         }
+        else{
+            printf("Turno de %s",partida->nombre_jugador_2);
+            tBusquedaAdversaria b;
+            crear_busqueda_adversaria(&b,partida);
+            proximo_movimiento(b,&fil,&col);
+            nuevo_movimiento(partida,fil,col);
+        }
+        partida->estado = verificarGanador(partida->tablero);
     }
 
     imprimirTablero(partida->tablero);
@@ -195,7 +193,7 @@ int verificarGanador(tTablero e){
 
 
 void imprimirTablero(tTablero tablero){
-    printf("  0   1   2");
+    printf("\n  0   1   2");
     printf("\n%c%c%c%c%c%c%c%c%c%c%c%c%c\n",206,205,205,205,206,205,205,205,206,205,205,205,206);
     for(int i=0;i<3;i++){
         printf("%c",186);

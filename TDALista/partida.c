@@ -51,7 +51,6 @@ Las posiciones (X,Y) deben corresponderse al rango [0-2]; X representa el número
 **/
 int nuevo_movimiento(tPartida p, int mov_x, int mov_y){
     int toReturn = PART_MOVIMIENTO_ERROR;
-    printf("el x elegido es:%i y el y elegido es:%i",mov_x,mov_y);
     if(!(mov_x>2 || mov_y>2 || p->tablero->grilla[mov_x][mov_y] !=0)){//si no es movimiento invalido (es movimiento valido)
         p->tablero->grilla[mov_x][mov_y] = p->turno_de;
 
