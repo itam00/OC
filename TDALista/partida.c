@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "ia.h"
 #include "arbol.h"
 #include "partida.h"
@@ -18,12 +19,18 @@ void nueva_partida(tPartida * p, int modo_partida, int comienza, char * j1_nombr
     (*p)=(struct partida*)(malloc(sizeof(struct partida)));
     (*p)->modo_partida=modo_partida;
     (*p)->estado = PART_EN_JUEGO;
+    srand(time(NULL));
 
     if(comienza!= PART_JUGADOR_RANDOM){
         (*p)->turno_de=comienza;
     }
     else{
-        (*p)->turno_de=PART_JUGADOR_1;
+        if(rand()%2){
+            (*p)->turno_de=PART_JUGADOR_1;
+        }
+        else{
+            (*p)->turno_de=PART_JUGADOR_2;
+        }
     }
 
     strcpy((*p)->nombre_jugador_1,j1_nombre);
