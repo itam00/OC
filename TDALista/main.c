@@ -6,6 +6,7 @@
 
 void humanoVsHumano(char jugador1[50],char jugador2[50],int jugadorInicial);
 void humanoVsMaquina(char jugador1[50],int jugadorInicial);
+void MaquinaVsMaquina(int jugadorInicial);
 int esTerminal(tTablero t);
 int verificarGanador(tTablero e);
 void imprimirTablero(tTablero tablero);
@@ -18,9 +19,9 @@ int main(){
     char jugador1[50];
     char jugador2[50];
 
-    while(modo!=1 && modo!=2){
+    while(modo!=1 && modo!=2 && modo!=3){
         printf("\nSeleccione un modo para comenzar:\n");
-        printf("1: Humano vs Humano\n2: Humano vs Maquina\n");
+        printf("1: Humano vs Humano\n2: Humano vs Maquina\n3: Maquina vs Maquina\n");
         scanf("%i",&modo);
     }
 
@@ -42,19 +43,25 @@ int main(){
             break;
     }
 
-    printf("Ingrese el nombre del jugador 1: (sin espacios)\n");
-    scanf("%s",jugador1);
-
     if(modo == 1){
+        printf("Ingrese el nombre del jugador 1: (sin espacios)\n");
+        scanf("%s",jugador1);
         printf("\nIngrese el nombre del jugador 2: (sin espacios)\n");
         scanf("%s",jugador2);
         printf("\n");
         humanoVsHumano(jugador1,jugador2,jugadorInicial);
     }
-    else{
+    else
+        if (modo==2){
+        printf("Ingrese el nombre del jugador 1: (sin espacios)\n");
+        scanf("%s",jugador1);
         humanoVsMaquina(jugador1,jugadorInicial);
         printf("\n");
-    }
+        }
+        else{
+            MaquinaVsMaquina(jugadorInicial);
+            printf("\n");
+        }
 
 }
 
@@ -139,6 +146,34 @@ void humanoVsMaquina(char jugador1[50],int jugadorInicial){
     }
 }
 
+void MaquinaVsMaquina(int jugadorInicial){
+    int fil,col;
+    tPartida partida;
+    tBusquedaAdversaria b;
+    nueva_partida(&partida,PART_MODO_USUARIO_VS_AGENTE_IA,jugadorInicial,"Maquina A","Maquina B");
+
+    while(partida->estado==PART_EN_JUEGO){
+            imprimirTablero(partida->tablero);
+            printf("Turno de %s",partida->nombre_jugador_2);
+            crear_busqueda_adversaria(&b,partida);
+            proximo_movimiento(b,&fil,&col);
+            nuevo_movimiento(partida,fil,col);
+            partida->estado = verificarGanador(partida->tablero);
+        }
+
+    imprimirTablero(partida->tablero);
+    switch(partida->estado){
+    case PART_EMPATE:
+        printf("\nHubo un empate");
+        break;
+    case PART_GANA_JUGADOR_1:
+        printf("\nGana %s",partida->nombre_jugador_1);
+        break;
+    case PART_GANA_JUGADOR_2:
+        printf("\nGana la maquinola");
+        break;
+    }
+}
 
 int esTerminal(tTablero t){
     int ocupadas=1;
