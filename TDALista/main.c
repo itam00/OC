@@ -11,7 +11,9 @@ int esTerminal(tTablero t);
 int verificarGanador(tTablero e);
 void imprimirTablero(tTablero tablero);
 
-
+/**
+Refleja una partida de Ta-Te-Ti.
+**/
 int main(){
     int modo=0;
     int jugadorInicial=0;
@@ -71,7 +73,9 @@ int main(){
     }
 
 }
-
+/**
+Refleja el modo de juego Humano vs Humano.
+**/
 void humanoVsHumano(char jugador1[50],char jugador2[50],int jugadorInicial){
     int fil,col;
     tPartida partida;
@@ -110,6 +114,9 @@ void humanoVsHumano(char jugador1[50],char jugador2[50],int jugadorInicial){
     finalizar_partida(&partida);
 }
 
+/**
+Refleja el modo de juego Humano vs Maquina.
+**/
 void humanoVsMaquina(char jugador1[50],int jugadorInicial){
     int fil,col,valido;
     tPartida partida;
@@ -155,6 +162,9 @@ void humanoVsMaquina(char jugador1[50],int jugadorInicial){
     }
     finalizar_partida(&partida);
 }
+/**
+Refleja el modo de juego Maquina vs Maquina.
+**/
 
 void MaquinaVsMaquina(int jugadorInicial){
     int fil,col;
@@ -186,7 +196,10 @@ void MaquinaVsMaquina(int jugadorInicial){
     }
 }
 
-
+/**
+Devuelve 1 si el tablero es terminal (esta lleno) y 0
+en caso contrario.
+*//
 int esTerminal(tTablero t){
     int ocupadas=1;
     for(int i=0;i<3 && ocupadas;i++){
@@ -196,6 +209,11 @@ int esTerminal(tTablero t){
     }
     return ocupadas;
 }
+/**
+Devuelve 1 PART_EMPATE si hubo embate, PART_GANA_JUGADOR_1 si ganó
+el jugador 1, PART_GANA_JUGADOR_2 si ganó el jugador 2 y PART_EN_JUEGO
+en cualquier otro caso.
+**/
 
 int verificarGanador(tTablero e){
     int tateti=0,toReturn,fichaGanador;
@@ -237,7 +255,9 @@ int verificarGanador(tTablero e){
 
 }
 
-
+/**
+Imprime el tablero mostrando la ubicación de las fichas en la grilla.
+*//
 
 void imprimirTablero(tTablero tablero){
     printf("\n  0   1   2");
