@@ -13,6 +13,7 @@ static void diferencia_estados(tEstado anterior, tEstado nuevo, int * x, int * y
 static tEstado clonar_estado(tEstado e);
 static void eliminarQuitarDeLista(tElemento estado);
 static int tableroLleno(tEstado estado);
+void destruirEstado(tElemento e);
 
 
 static int min(int x, int y){
@@ -91,9 +92,6 @@ void proximo_movimiento(tBusquedaAdversaria b, int * x, int * y){
     diferencia_estados(estadoActual,estadoProximo,x,y);
 }
 
-void destruirEstado(tElemento e){
-    free(e);
-}
 
 /**
 Finaliza la busqueda binaria B, liberando toda la memoria utilizada.
@@ -132,22 +130,25 @@ Implementa la estrategia del algoritmo Min-Max con podas Alpha-Beta, a partir de
 static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, int beta, int jugador_max, int jugador_min){
     tEstado estado= (tEstado)(n->elemento);
     int mejor_valor_sucesores;
-    int valor_sucesor;
     tLista listaSucesores;
     tPosicion actual;
     tNodo nodoNuevo;
     tEstado estado_sucesor;
+    int valor_sucesor;
+    valor_sucesor=0;
+
+    estado->utilidad=valor_utilidad(estado,jugador_max);
 
     if (estado->utilidad == IA_NO_TERMINO){
+
         if (es_max){
             mejor_valor_sucesores= IA_INFINITO_NEG;
             listaSucesores=estados_sucesores(estado,jugador_max);
             actual= l_primera(listaSucesores);
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-                estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_max);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
-                crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
+                crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min);
                 valor_sucesor= estado_sucesor->utilidad;
                 alpha= max(alpha,mejor_valor_sucesores);
                 mejor_valor_sucesores= max(mejor_valor_sucesores,estado_sucesor->utilidad);
@@ -164,27 +165,41 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
             actual= l_primera(listaSucesores);
             while (beta>alpha && actual!=l_fin(listaSucesores)){
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
-                estado_sucesor->utilidad=valor_utilidad(estado_sucesor,jugador_max);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
-                crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min); //le pone al estado de nodoNuevo su utilidad
+                crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min);
                 valor_sucesor= estado_sucesor->utilidad;
                 mejor_valor_sucesores= min(mejor_valor_sucesores,estado_sucesor->utilidad);
                 alpha= min(alpha,mejor_valor_sucesores);
 
                 actual = l_siguiente(listaSucesores,actual);
             }
+
             estado->utilidad=mejor_valor_sucesores;
         }
-        l_destruir(&listaSucesores,&eliminarQuitarDeLista);
+
+        //se eliminan completamente los estados que no seran utilizados ya que no fueorn insertados en el arbol
+        while(actual!=l_fin(listaSucesores)){
+            l_eliminar(listaSucesores,l_ultima(listaSucesores),&destruirEstado);
+        }
+        //Se quitan los estados de la lista que si fueron usados y se destruye la lista
+        l_destruir(&listaSucesores,eliminarQuitarDeLista);
     }
 }
-/*
-Metodo auxiliar usado para quitar un estado de un lista sin eliminarlo
-*/
+/**
+Operacion auxiliar usada para quitar un estado de un lista sin eliminarlo
+**/
 void eliminarQuitarDeLista(tElemento estado){
 }
 
-/* Metodo auxiliar que determina si el "tablero" esta completamente ocupado
+/**
+Operacin auxiliar usada para eliminar un elemento
+**/
+void destruirEstado(tElemento e){
+    free(e);
+}
+
+
+/* Operacion auxiliar que determina si el "tablero" esta completamente ocupado
 por fichas de cualquiera de los dos jugadores.
 */
 int tableroLleno(tEstado estado){
@@ -259,14 +274,12 @@ estados_sucesores(estado, ficha) retornaría dos listas L1 y L2 tal que:
 static tLista estados_sucesores(tEstado e, int ficha_jugador){
     tLista lista;
     crear_lista(&lista);
-    int numeroRandom;
     for(int i=0;i<3;i++){
         for(int j=0;j<3;j++){
             if(e->grilla[i][j]==0){
                 tEstado nuevo = clonar_estado(e);
                 nuevo->grilla[i][j] = ficha_jugador;
-                numeroRandom = rand()%2;
-                if(numeroRandom){
+                if(rand()%2){ //numero random entre 0 y 1 los cuales definiran el orden de los elementos en la lista
                     l_insertar(lista,l_primera(lista),nuevo);
                 }
                 else{
