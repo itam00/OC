@@ -40,7 +40,7 @@
 1572463920 c:\users\mati\documents\github\oc\tdalista\arbol.h
 	"lista.h"
 
-1570672700 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.c
+1572469175 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.c
 	"lista.h"
 	<stdio.h>
 	<stdlib.h>
@@ -48,17 +48,17 @@
 1570672747 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\lista.h
 	"lista.h"
 
-1572360172 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\main.c
+1572489942 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
 	"arbol.h"
 	"ia.h"
 
-1572032971 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.h
+1572489942 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.h
 	"lista.h"
 
-1572032971 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.c
+1572489942 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\arbol.c
 	<stdio.h>
 	<stdlib.h>
 	"arbol.h"
@@ -75,8 +75,9 @@
 	"lista.h"
 	"arbol.h"
 
-1572360772 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\ia.c
+1572489942 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\ia.c
 	<stdlib.h>
+	<time.h>
 	"lista.h"
 	"arbol.h"
 	"ia.h"
@@ -116,10 +117,11 @@
 	"partida.h"
 	"lista.h"
 
-1572360172 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\partida.c
+1572489942 source:c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\partida.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
+	<time.h>
 	"ia.h"
 	"arbol.h"
 	"partida.h"
