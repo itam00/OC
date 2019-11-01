@@ -93,6 +93,7 @@ void humanoVsHumano(char jugador1[50],char jugador2[50],int jugadorInicial){
             printf("\nGana %s",partida->nombre_jugador_2);
             break;
     }
+    finalizar_partida(&partida);
 }
 
 void humanoVsMaquina(char jugador1[50],int jugadorInicial){
@@ -121,6 +122,7 @@ void humanoVsMaquina(char jugador1[50],int jugadorInicial){
             crear_busqueda_adversaria(&b,partida);
             proximo_movimiento(b,&fil,&col);
             nuevo_movimiento(partida,fil,col);
+            destruir_busqueda_adversaria(&b);
         }
         partida->estado = verificarGanador(partida->tablero);
     }
@@ -137,6 +139,7 @@ void humanoVsMaquina(char jugador1[50],int jugadorInicial){
         printf("\nGana la maquinola");
         break;
     }
+    finalizar_partida(&partida);
 }
 
 

@@ -135,7 +135,6 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
     tNodo nodoNuevo;
     tEstado estado_sucesor;
     int valor_sucesor;
-    valor_sucesor=0;
 
     estado->utilidad=valor_utilidad(estado,jugador_max);
 
