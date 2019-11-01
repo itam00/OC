@@ -17,6 +17,9 @@ Inicializa una nueva partida, indicando:
 **/
 void nueva_partida(tPartida * p, int modo_partida, int comienza, char * j1_nombre, char * j2_nombre){
     (*p)=(struct partida*)(malloc(sizeof(struct partida)));
+    if((*p)==NULL){
+            exit(PART_ERROR_MEMORIA);
+    }
     (*p)->modo_partida=modo_partida;
     (*p)->estado = PART_EN_JUEGO;
     srand(time(NULL));

@@ -12,6 +12,9 @@ Una referencia al árbol creado es referenciado en *A.
 **/
  void crear_arbol(tArbol * a){
     *a= (struct arbol*)(malloc(sizeof(struct arbol)));
+    if((*a)==NULL){
+        exit(ARB_ERROR_MEMORIA);
+    }
     (*a)->raiz=NULL;
 }
 
@@ -23,6 +26,9 @@ void crear_raiz(tArbol a, tElemento e){
     if ((a->raiz)!=NULL)
         exit(ARB_OPERACION_INVALIDA);
     a->raiz= (struct nodo*)malloc(sizeof(struct nodo));
+    if(a->raiz==NULL){
+        exit(ARB_ERROR_MEMORIA);
+    }
     tLista lista;
     crear_lista(&lista);
     a->raiz->hijos=lista;
@@ -66,6 +72,9 @@ tNodo a_insertar(tArbol a, tNodo np, tNodo nh, tElemento e){
     {
         aux = l_fin(hermanos);
         nuevo = (struct nodo*)malloc(sizeof(struct nodo));
+        if(nuevo==NULL){
+            exit(ARB_ERROR_MEMORIA);
+        }
         l_insertar(hermanos,aux, nuevo);
 
     }
@@ -81,6 +90,9 @@ tNodo a_insertar(tArbol a, tNodo np, tNodo nh, tElemento e){
             exit(ARB_OPERACION_INVALIDA);
         }
         nuevo = (tNodo) malloc(sizeof(struct nodo));
+        if(nuevo==NULL){
+            exit(ARB_ERROR_MEMORIA);
+        }
         l_insertar(hermanos,aux,nuevo);
     }
 

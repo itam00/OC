@@ -10,6 +10,9 @@
 
 void crear_lista(tLista* l){
     *l = (struct celda*)malloc(sizeof(struct celda));
+    if((*l)==NULL){
+        exit(LST_ERROR_MEMORIA);
+    }
     (*l)->elemento = NULL;
     (*l)->siguiente = NULL;
 }
@@ -72,7 +75,10 @@ void l_insertar(tLista l, tPosicion p, tElemento e){
     if(p==NULL){
         exit(LST_POSICION_INVALIDA);
     }
-    struct celda* nueva= (struct celda*)(malloc(sizeof(struct celda)));
+    tPosicion nueva= (struct celda*)(malloc(sizeof(struct celda)));
+    if(nueva==NULL){
+        exit(LST_ERROR_MEMORIA);
+    }
     nueva->siguiente=p->siguiente;
     nueva->elemento= e;
     p->siguiente=nueva;

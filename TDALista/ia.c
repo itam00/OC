@@ -298,6 +298,9 @@ de utilidad.
 **/
 static tEstado clonar_estado(tEstado e){
     tEstado nuevo= (tEstado)(malloc(sizeof(struct estado)));
+    if (nuevo == NULL){
+        exit(IA_ERROR_MEMORIA);
+    }
     for (int i=0; i<3;i++)
         for( int j=0; j<3; j++)
             nuevo->grilla[i][j]= e->grilla[i][j];
