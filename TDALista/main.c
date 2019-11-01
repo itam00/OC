@@ -156,13 +156,14 @@ void MaquinaVsMaquina(int jugadorInicial){
     nueva_partida(&partida,PART_MODO_USUARIO_VS_AGENTE_IA,jugadorInicial,"Maquina A","Maquina B");
 
     while(partida->estado==PART_EN_JUEGO){
-            imprimirTablero(partida->tablero);
-            printf("Turno de %s",partida->nombre_jugador_2);
-            crear_busqueda_adversaria(&b,partida);
-            proximo_movimiento(b,&fil,&col);
-            nuevo_movimiento(partida,fil,col);
-            partida->estado = verificarGanador(partida->tablero);
-        }
+        imprimirTablero(partida->tablero);
+        printf("Turno de %s",partida->nombre_jugador_2);
+        crear_busqueda_adversaria(&b,partida);
+        proximo_movimiento(b,&fil,&col);
+        nuevo_movimiento(partida,fil,col);
+        partida->estado = verificarGanador(partida->tablero);
+        destruir_busqueda_adversaria(&b);
+    }
 
     imprimirTablero(partida->tablero);
     switch(partida->estado){
@@ -173,10 +174,11 @@ void MaquinaVsMaquina(int jugadorInicial){
         printf("\nGana %s",partida->nombre_jugador_1);
         break;
     case PART_GANA_JUGADOR_2:
-        printf("\nGana la maquinola");
+        printf("\nGana %s",partida->nombre_jugador_2);
         break;
     }
 }
+
 
 int esTerminal(tTablero t){
     int ocupadas=1;

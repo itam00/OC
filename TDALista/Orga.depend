@@ -88,7 +88,7 @@
 
 1572045616 c:\users\alan\desktop\uns\organizacion de computadoras\proyecto orga github\oc\tdalista\partida.h
 
-1572569752 source:c:\users\mati\documents\github\oc\tdalista\ia.c
+1572571200 source:c:\users\mati\documents\github\oc\tdalista\ia.c
 	<stdlib.h>
 	<time.h>
 	"lista.h"
@@ -107,7 +107,7 @@
 	"lista.h"
 	"arbol.h"
 
-1572525932 source:c:\users\mati\documents\github\oc\tdalista\partida.c
+1572571200 source:c:\users\mati\documents\github\oc\tdalista\partida.c
 	<stdio.h>
 	<string.h>
 	<stdlib.h>
