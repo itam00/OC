@@ -18,50 +18,57 @@ int main(){
     printf("TA-TE-TI\n");
     char jugador1[50];
     char jugador2[50];
+    int jugarDenuevo = 1;
 
-    while(modo!=1 && modo!=2 && modo!=3){
-        printf("\nSeleccione un modo para comenzar:\n");
-        printf("1: Humano vs Humano\n2: Humano vs Maquina\n3: Maquina vs Maquina\n");
-        scanf("%i",&modo);
-    }
+    while(jugarDenuevo){
 
-    while(jugadorInicial<1 || jugadorInicial>3){
-        printf("\nSeleccione quien empieza:\n");
-        printf("\n1: jugador1\n2: jugador2/Maquina \n3: random\n");
-        scanf("%i",&jugadorInicial);
-    }
-
-    switch(jugadorInicial){
-        case 1:
-            jugadorInicial = PART_JUGADOR_1;
-            break;
-        case 2:
-            jugadorInicial = PART_JUGADOR_2;
-            break;
-        case 3:
-            jugadorInicial = PART_JUGADOR_RANDOM;
-            break;
-    }
-
-    if(modo == 1){
-        printf("Ingrese el nombre del jugador 1: (sin espacios)\n");
-        scanf("%s",jugador1);
-        printf("\nIngrese el nombre del jugador 2: (sin espacios)\n");
-        scanf("%s",jugador2);
-        printf("\n");
-        humanoVsHumano(jugador1,jugador2,jugadorInicial);
-    }
-    else
-        if (modo==2){
-        printf("Ingrese el nombre del jugador 1: (sin espacios)\n");
-        scanf("%s",jugador1);
-        humanoVsMaquina(jugador1,jugadorInicial);
-        printf("\n");
+        while(modo!=1 && modo!=2 && modo!=3){
+            printf("\nSeleccione un modo para comenzar:\n");
+            printf("1: Humano vs Humano\n2: Humano vs Maquina\n3: Maquina vs Maquina\n");
+            scanf("%i",&modo);
         }
-        else{
-            MaquinaVsMaquina(jugadorInicial);
+
+        while(jugadorInicial<1 || jugadorInicial>3){
+            printf("\nSeleccione quien empieza:\n");
+            printf("\n1: jugador1\n2: jugador2/Maquina \n3: random\n");
+            scanf("%i",&jugadorInicial);
+        }
+
+        switch(jugadorInicial){
+            case 1:
+                jugadorInicial = PART_JUGADOR_1;
+                break;
+            case 2:
+                jugadorInicial = PART_JUGADOR_2;
+                break;
+            case 3:
+                jugadorInicial = PART_JUGADOR_RANDOM;
+                break;
+        }
+
+        if(modo == 1){
+            printf("Ingrese el nombre del jugador 1: (sin espacios)\n");
+            scanf("%s",jugador1);
+            printf("\nIngrese el nombre del jugador 2: (sin espacios)\n");
+            scanf("%s",jugador2);
             printf("\n");
+            humanoVsHumano(jugador1,jugador2,jugadorInicial);
         }
+        else
+            if (modo==2){
+            printf("Ingrese el nombre del jugador 1: (sin espacios)\n");
+            scanf("%s",jugador1);
+            humanoVsMaquina(jugador1,jugadorInicial);
+            printf("\n");
+            }
+            else{
+                MaquinaVsMaquina(jugadorInicial);
+                printf("\n");
+            }
+        printf("\n\nDesea volver a jugar?...\n");
+        printf("0: NO   Otro numero: SI\n");
+        scanf("%i",&jugarDenuevo);
+    }
 
 }
 

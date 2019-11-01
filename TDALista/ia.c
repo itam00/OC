@@ -134,7 +134,6 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
     tPosicion actual;
     tNodo nodoNuevo;
     tEstado estado_sucesor;
-    int valor_sucesor;
 
     estado->utilidad=valor_utilidad(estado,jugador_max);
 
@@ -148,7 +147,6 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,0,alpha,beta,jugador_max,jugador_min);
-                valor_sucesor= estado_sucesor->utilidad;
                 alpha= max(alpha,mejor_valor_sucesores);
                 mejor_valor_sucesores= max(mejor_valor_sucesores,estado_sucesor->utilidad);
 
@@ -166,7 +164,6 @@ static void crear_sucesores_min_max(tArbol a, tNodo n, int es_max, int alpha, in
                 estado_sucesor= (tEstado) l_recuperar(listaSucesores,actual);
                 nodoNuevo= a_insertar(a,n,NULL,estado_sucesor);
                 crear_sucesores_min_max(a,nodoNuevo,1,alpha,beta,jugador_max,jugador_min);
-                valor_sucesor= estado_sucesor->utilidad;
                 mejor_valor_sucesores= min(mejor_valor_sucesores,estado_sucesor->utilidad);
                 alpha= min(alpha,mejor_valor_sucesores);
 
