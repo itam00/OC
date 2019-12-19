@@ -199,7 +199,7 @@ void MaquinaVsMaquina(int jugadorInicial){
 /**
 Devuelve 1 si el tablero es terminal (esta lleno) y 0
 en caso contrario.
-*//
+*/
 int esTerminal(tTablero t){
     int ocupadas=1;
     for(int i=0;i<3 && ocupadas;i++){
@@ -257,7 +257,7 @@ int verificarGanador(tTablero e){
 
 /**
 Imprime el tablero mostrando la ubicación de las fichas en la grilla.
-*//
+*/
 
 void imprimirTablero(tTablero tablero){
     printf("\n  0   1   2");
